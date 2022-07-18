@@ -2,13 +2,13 @@ import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.TreeSet;
 
-public class LeaderBoard
+class LeaderBoard
 {
-    private Set<Play> board;
+    private TreeSet<Play> board;
 
     public LeaderBoard(Boolean compareByScore)
     {
-        board = new TreeSet<>(new Comparator<T>(){
+        board = new TreeSet<Play>(new Comparator<Play>(){
             @Override
             public int compare(Play p1, Play p2)
             {
@@ -33,12 +33,12 @@ public class LeaderBoard
 
     public void printList()
     {
-        this.board.foreach(b -> System.out.println(b));
+        this.board.forEach(b -> System.out.println(b));
     }
 
 }
 
-public class Play implements Comparable
+class Play //implements Comparable
 {
     private User player;
     private LocalTime playTime;
@@ -71,7 +71,7 @@ public class Play implements Comparable
 
 }
 
-public class User
+class User
 {
     private String name;
     private Integer id;
@@ -91,16 +91,16 @@ public class User
     }
 }
 
-public class Teste
+class Teste
 {
     public static void main(String[] args) {
         LeaderBoard a = new LeaderBoard(true);
         User u1 = new User("Joao", 1);
         User u2 = new User("Carlin", 2);
-        Play p1 = new Play(u1, 0.5);
-        Play p2 = new Play(u2, 3.0);
-        p1.setScore(5);
-        p2.setScore(2);
+        Play p1 = new Play(u1, LocalTime.now()); //0.5);
+        Play p2 = new Play(u2, LocalTime.now()); //3.0);
+        p1.setScore(5d);
+        p2.setScore(2d);
         a.addPlay(p1);
         a.addPlay(p2);
         a.printList();
