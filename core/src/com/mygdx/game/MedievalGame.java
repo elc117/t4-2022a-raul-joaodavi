@@ -17,7 +17,7 @@ public class MedievalGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		player = new Player("XAOZIN", "Character/player.png", 50, 50);
+		player = new Player("XAOZIN", "Character/player.png", 50, 50, 10, 4);
 		// setting up screen of the game
 		int a = 1;
 		setScreen(new Phase1(this, batch, player));
