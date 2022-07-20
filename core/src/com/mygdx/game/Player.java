@@ -3,6 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
+
+import java.util.ArrayList;
 
 public class Player {
     private String name;
@@ -11,6 +14,8 @@ public class Player {
     private float positionY;
     private float moveSpeedX;
     private float jumpSpeed;
+
+    Rectangle body;
 
     public float gravity;
 
@@ -23,6 +28,7 @@ public class Player {
         this.moveSpeedX = moveSpeedX;
         this.jumpSpeed = jumpSpeed;
         this.gravity = gravity;
+        body = new Rectangle(positionX, positionY, mainImage.getWidth(), mainImage.getHeight());
     }
 
     public Texture getMainImage() {
@@ -45,34 +51,49 @@ public class Player {
         this.positionY = positionY;
     }
 
-    public void moveX()
+    public void moveX(ArrayList<Rectangle> objects)
     {
         if (Gdx.input.isKeyPressed(Input.Keys.D))
         {
-            positionX += moveSpeedX;
+            float newPositionX = positionX += moveSpeedX;
+            for (int i = 0; i < objects.toArray().length; i++)
+            {
+                //if () return;
+            }
+            positionX = newPositionX;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A))
         {
-            positionX -= moveSpeedX;
+            float newPositionX = positionX -= moveSpeedX;
+            for (int i = 0; i < objects.toArray().length; i++)
+            {
+                //if() return;
+            }
+            positionX = newPositionX;
         }
     }
 
-    public void jump()
+    public void jump(ArrayList<Rectangle> objects)
     {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
             positionY += jumpSpeed;
     }
 
-    public void gravityEffect()
+    public void gravityEffect(ArrayList<Rectangle> objects)
     {
-        positionY -= gravity;
+        float newPositionY = positionY - gravity;
+        for (int i = 0; i < objects.toArray().length; i++)
+        {
+            //if () return;
+        }
+        positionY = newPositionY;
     }
 
-    public void render()
+    public void render(ArrayList<Rectangle> objects)
     {
-        moveX();
-        jump();
-        gravityEffect();
+        moveX(objects);
+        jump(objects);
+        gravityEffect(objects);
     }
 
 }

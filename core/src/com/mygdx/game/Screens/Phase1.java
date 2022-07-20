@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MedievalGame;
 import com.mygdx.game.Player;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Phase1 implements Screen {
@@ -32,7 +32,7 @@ public class Phase1 implements Screen {
     {
         phasePhysicShapes = new ArrayList<Rectangle>();
         //ground
-        phasePhysicShapes.add(new Rectangle(0, 0, medievalGame.V_WIDTH, medievalGame.V_HEIGHT/4));
+        phasePhysicShapes.add(new Rectangle(0, 0, MedievalGame.V_WIDTH, (float)MedievalGame.V_HEIGHT/4));
     }
 
     public Phase1(MedievalGame game, SpriteBatch batch, Player player)
@@ -54,14 +54,10 @@ public class Phase1 implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        player.render();
+        player.render(phasePhysicShapes);
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getMainImage(), player.getPositionX(), player.getPositionY());
-        for (int i = 0; i < 10; i++)
-        {
-
-        }
         batch.end();
     }
 
