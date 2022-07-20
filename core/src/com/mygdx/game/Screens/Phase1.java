@@ -11,6 +11,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MedievalGame;
 import com.mygdx.game.Player;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public class Phase1 implements Screen {
     Texture forestBackGround;
     SpriteBatch batch;
@@ -22,6 +25,13 @@ public class Phase1 implements Screen {
     private Viewport gamePort;
     Player player;
 
+    ArrayList<Rectangle> phasePhysicShapes;
+
+
+    private void createPhysicShapes()
+    {
+        phasePhysicShapes = new ArrayList<Rectangle>();
+    }
 
     public Phase1(MedievalGame game, SpriteBatch batch, Player player)
     {
@@ -31,6 +41,7 @@ public class Phase1 implements Screen {
         forestBackGround = new Texture("Sceneries/forest.jpg");
         this.player = player;
         this.batch = batch;
+        createPhysicShapes();
     }
     @Override
     public void show() {
