@@ -12,7 +12,9 @@ public class Player {
     private float moveSpeedX;
     private float jumpSpeed;
 
-    public Player(String name, String imageLink, float positionX, float positionY, float moveSpeedX, float jumpSpeed)
+    public float gravity;
+
+    public Player(String name, String imageLink, float positionX, float positionY, float moveSpeedX, float jumpSpeed, float gravity)
     {
         this.name = name;
         mainImage = new Texture(imageLink);
@@ -20,6 +22,7 @@ public class Player {
         this.positionY = positionY;
         this.moveSpeedX = moveSpeedX;
         this.jumpSpeed = jumpSpeed;
+        this.gravity = gravity;
     }
 
     public Texture getMainImage() {
@@ -60,12 +63,16 @@ public class Player {
             positionY += jumpSpeed;
     }
 
+    public void gravityEffect()
+    {
+        positionY -= gravity;
+    }
+
     public void render()
     {
         moveX();
         jump();
+        gravityEffect();
     }
-
-
 
 }
