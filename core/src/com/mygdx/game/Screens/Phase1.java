@@ -31,6 +31,8 @@ public class Phase1 implements Screen {
     private void createPhysicShapes()
     {
         phasePhysicShapes = new ArrayList<Rectangle>();
+        //ground
+        phasePhysicShapes.add(new Rectangle(0, 0, medievalGame.V_WIDTH, medievalGame.V_HEIGHT/4));
     }
 
     public Phase1(MedievalGame game, SpriteBatch batch, Player player)
@@ -56,6 +58,10 @@ public class Phase1 implements Screen {
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getMainImage(), player.getPositionX(), player.getPositionY());
+        for (int i = 0; i < 10; i++)
+        {
+
+        }
         batch.end();
     }
 
