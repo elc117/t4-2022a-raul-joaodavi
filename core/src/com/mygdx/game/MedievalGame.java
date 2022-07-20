@@ -17,16 +17,12 @@ public class MedievalGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		// setting up screen of the game
-		setScreen(new PlayScreen(this));
-		image = new Texture("badlogic.jpg");
+		setScreen(new PlayScreen(this, batch));
 	}
 
 	@Override
 	public void render () {
 		super.render(); // delegates render method to whatever screen is occuring at the time
-		batch.begin();
-		batch.draw(image, 50, 50);
-		batch.end();
 	}
 
 }
