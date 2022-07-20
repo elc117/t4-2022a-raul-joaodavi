@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MedievalGame;
+import com.mygdx.game.Player;
 
 public class Phase1 implements Screen {
     Texture forestBackGround;
@@ -19,15 +20,16 @@ public class Phase1 implements Screen {
     private OrthographicCamera gamecam;
     // how the game fits the devices display
     private Viewport gamePort;
+    Player player;
 
 
-    public Phase1(MedievalGame game, SpriteBatch batch)
+    public Phase1(MedievalGame game, SpriteBatch batch, Player player)
     {
         this.medievalGame = game;
         gamecam = new OrthographicCamera();
-        // fit viewport is a viewport that mantains the game's aspect ratio
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
         forestBackGround = new Texture("Sceneries/forest.jpg");
+        this.player = player;
         this.batch = batch;
     }
     @Override
@@ -41,6 +43,7 @@ public class Phase1 implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
+        batch.draw(player.getMainImage(), player.getPositionX(), player.getPositionY());
         batch.end();
     }
 

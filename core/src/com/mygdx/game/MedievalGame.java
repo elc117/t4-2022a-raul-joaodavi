@@ -11,21 +11,16 @@ public class MedievalGame extends Game {
 	public static final int V_WIDTH = 800;
 	public static final int V_HEIGHT = 600;
 	public SpriteBatch batch;
-	Texture image;
-	
+
+	public Player player;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		player = new Player("XAOZIN", "Character/player.png", 50, 50);
 		// setting up screen of the game
 		int a = 1;
-		if (a == 0)
-		{
-			setScreen(new Phase1(this, batch));
-		}
-		else if (a == 1)
-		{
-			setScreen(new Phase2(this, batch));
-		}
+		setScreen(new Phase1(this, batch, player));
 	}
 
 	@Override
