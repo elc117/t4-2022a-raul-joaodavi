@@ -93,7 +93,7 @@ public class Player {
     {
         moveX(objects);
         jump(objects);
-        gravityEffect(objects);
+        //gravityEffect(objects);
     }
 
 }

@@ -8,8 +8,8 @@ import com.mygdx.game.Screens.Phase2;
 
 public class MedievalGame extends Game {
 	// virtual height and width
-	public static final int V_WIDTH = 1280;
-	public static final int V_HEIGHT = 720;
+	public static final int V_WIDTH = 800;
+	public static final int V_HEIGHT = 600;
 	public SpriteBatch batch;
 
 	public Player player;

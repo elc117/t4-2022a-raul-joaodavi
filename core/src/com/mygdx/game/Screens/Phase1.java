@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class Phase1 implements Screen {
     Texture forestBackGround;
+    Texture woodPlatform1;
     SpriteBatch batch;
     private MedievalGame medievalGame;
     Texture texture;
@@ -41,6 +42,7 @@ public class Phase1 implements Screen {
         gamecam = new OrthographicCamera();
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
         forestBackGround = new Texture("Sceneries/forest.jpg");
+        woodPlatform1 = new Texture("Platforms/wood_tileset.png");
         this.player = player;
         this.batch = batch;
         createPhysicShapes();
@@ -57,6 +59,9 @@ public class Phase1 implements Screen {
         player.render(phasePhysicShapes);
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
+        batch.draw(woodPlatform1, 50, 50);
+        batch.draw(woodPlatform1, 100, 30);
+        batch.draw(woodPlatform1, 50, 200);
         batch.draw(player.getMainImage(), player.getPositionX(), player.getPositionY());
         batch.end();
     }
