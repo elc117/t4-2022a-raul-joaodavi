@@ -41,8 +41,8 @@ public class Phase1 implements Screen {
         this.medievalGame = game;
         gamecam = new OrthographicCamera();
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
-        forestBackGround = new Texture("Sceneries/forestBorders.jpg");
-        woodPlatform1 = new Texture("Platforms/wood_tileset.png");
+        forestBackGround = new Texture("Sceneries/Phase01.jpg");
+        //woodPlatform1 = new Texture("Platforms/wood_tileset.png");
         this.player = player;
         this.batch = batch;
         createPhysicShapes();
@@ -59,9 +59,9 @@ public class Phase1 implements Screen {
         player.render(phasePhysicShapes);
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
-        batch.draw(woodPlatform1, 400, 200);
-        batch.draw(woodPlatform1, 80, 400);
-        batch.draw(woodPlatform1, 660, 400);
+        //batch.draw(woodPlatform1, 400, 200);
+        //batch.draw(woodPlatform1, 80, 400);
+        //batch.draw(woodPlatform1, 660, 400);
         batch.draw(player.getMainImage(), player.getPositionX(), player.getPositionY());
         batch.end();
     }

@@ -8,8 +8,8 @@ import com.mygdx.game.Screens.Phase2;
 
 public class MedievalGame extends Game {
 	// virtual height and width
-	public static final int V_WIDTH = 1280;
-	public static final int V_HEIGHT = 720;
+	public static final int V_WIDTH = 800;
+	public static final int V_HEIGHT = 600;
 	public SpriteBatch batch;
 
 	public Player player;
@@ -17,7 +17,7 @@ public class MedievalGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		player = new Player("XAOZIN", "Character/Run/tile000.png", 50, 50, 10, 4, 2);
+		player = new Player("XAOZIN", "Character/Run/tile001.png", 50, 50, 10, 4, 2);
 		// setting up screen of the game
 		int a = 1;
 		setScreen(new Phase1(this, batch, player));
