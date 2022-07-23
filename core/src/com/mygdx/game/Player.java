@@ -14,6 +14,8 @@ public class Player {
     private float positionY;
     private float moveSpeedX;
     private float jumpSpeed;
+    private float startJump;
+    private boolean jumped;
 
     Rectangle body;
 
@@ -53,7 +55,7 @@ public class Player {
 
     public void moveX(ArrayList<Rectangle> objects)
     {
-        if (Gdx.input.isKeyPressed(Input.Keys.D))
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && positionX < 620)
         {
             float newPositionX = positionX += moveSpeedX;
             for (int i = 0; i < objects.toArray().length; i++)
@@ -62,7 +64,7 @@ public class Player {
             }
             positionX = newPositionX;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.A))
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && positionX > -25)
         {
             float newPositionX = positionX -= moveSpeedX;
             for (int i = 0; i < objects.toArray().length; i++)
@@ -75,7 +77,14 @@ public class Player {
 
     public void jump(ArrayList<Rectangle> objects)
     {
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && positionY <= 47) {
+            startJump = positionY;
+            jumped = true;
+        } else if (!Gdx.input.isKeyPressed(Input.Keys.SPACE) || positionY > startJump + 150){
+            jumped = false;
+        }
+
+        if(jumped)
             positionY += jumpSpeed;
     }
 
@@ -86,14 +95,15 @@ public class Player {
         {
             //if () return;
         }
-        positionY = newPositionY;
+        if(positionY > 47)
+            positionY = newPositionY;
     }
 
     public void render(ArrayList<Rectangle> objects)
     {
         moveX(objects);
         jump(objects);
-        //gravityEffect(objects);
+        gravityEffect(objects);
     }
 
 }
