@@ -96,11 +96,13 @@ public class Player {
     }
 
     public void jump(ArrayList<Rectangle> objects)
-    {
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded(objects)) {
+    {   
+        if(positionY > 470) {
+            jumping = false;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded(objects)) {
             startJump = positionY;
             jumping = true;
-        } else if (!Gdx.input.isKeyPressed(Input.Keys.SPACE) || positionY > startJump + 150){
+        } else if (!Gdx.input.isKeyPressed(Input.Keys.SPACE) || positionY > startJump + 150) {
             jumping = false;
         }
 
@@ -128,8 +130,6 @@ public class Player {
         moveX(objects);
         jump(objects);
         gravityEffect(objects);
-        System.out.println(positionY);
-        System.out.println(positionX);
     }
 
 }
