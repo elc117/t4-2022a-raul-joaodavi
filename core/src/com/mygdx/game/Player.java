@@ -14,8 +14,9 @@ public class Player {
     private float positionY;
     private float moveSpeedX;
     private float jumpSpeed;
+    private float timeInAir;
     private float startJump;
-    private boolean jumped;
+    private boolean jumping;
 
     Rectangle body;
 
@@ -30,6 +31,7 @@ public class Player {
         this.moveSpeedX = moveSpeedX;
         this.jumpSpeed = jumpSpeed;
         this.gravity = gravity;
+        timeInAir = 0;
         body = new Rectangle(positionX, positionY, mainImage.getWidth(), mainImage.getHeight());
     }
 
@@ -75,28 +77,50 @@ public class Player {
         }
     }
 
+    public boolean grounded(ArrayList<Rectangle> objects) 
+    {
+        if(positionY <= 47)
+            return true;
+        else if(positionX > -15 && positionX < 85 && positionY >= 160 && positionY <= 170)
+            return true;
+        else if(positionX > 240 && positionX < 340 && positionY >= 245 && positionY <= 255)
+            return true;
+        else if(positionX > -15 && positionX < 85 && positionY >= 353 && positionY <= 363)
+            return true;
+        else if(positionX > 485 && positionX < 585 && positionY >= 160 && positionY <= 170)
+            return true;
+        else if(positionX > 485 && positionX < 585 && positionY >= 353 && positionY <= 363)
+            return true;
+        else
+            return false;
+    }
+
     public void jump(ArrayList<Rectangle> objects)
     {
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && positionY <= 47) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded(objects)) {
             startJump = positionY;
-            jumped = true;
+            jumping = true;
         } else if (!Gdx.input.isKeyPressed(Input.Keys.SPACE) || positionY > startJump + 150){
-            jumped = false;
+            jumping = false;
         }
 
-        if(jumped)
+        if(jumping)
             positionY += jumpSpeed;
     }
 
     public void gravityEffect(ArrayList<Rectangle> objects)
     {
-        float newPositionY = positionY - gravity;
+        float newPositionY = positionY - gravity * timeInAir;
         for (int i = 0; i < objects.toArray().length; i++)
         {
             //if () return;
         }
-        if(positionY > 47)
+        if(positionY > 47 && !jumping && !grounded(objects)) {
             positionY = newPositionY;
+            timeInAir += 0.1;
+        } else {
+            timeInAir = 0;
+        }
     }
 
     public void render(ArrayList<Rectangle> objects)
@@ -104,6 +128,8 @@ public class Player {
         moveX(objects);
         jump(objects);
         gravityEffect(objects);
+        System.out.println(positionY);
+        System.out.println(positionX);
     }
 
 }
