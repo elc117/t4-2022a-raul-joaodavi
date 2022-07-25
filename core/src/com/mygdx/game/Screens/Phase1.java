@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MedievalGame;
 import com.mygdx.game.Player;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.Color;
 
 import java.util.ArrayList;
 
@@ -25,28 +27,28 @@ public class Phase1 implements Screen {
     // how the game fits the devices display
     private Viewport gamePort;
     Player player;
-
+    private ShapeRenderer shapeRenderer;
     ArrayList<Rectangle> phasePhysicShapes;
 
-
-    private void createPhysicShapes()
-    {
+    private void createPhysicShapes() {
         phasePhysicShapes = new ArrayList<Rectangle>();
-        //ground
-        phasePhysicShapes.add(new Rectangle(0, 0, MedievalGame.V_WIDTH, (float)MedievalGame.V_HEIGHT/4));
+        // ground
+        phasePhysicShapes.add(new Rectangle(0, 0, MedievalGame.V_WIDTH, (float) MedievalGame.V_HEIGHT / 4));
     }
 
-    public Phase1(MedievalGame game, SpriteBatch batch, Player player)
-    {
+    public Phase1(MedievalGame game, SpriteBatch batch, Player player) {
         this.medievalGame = game;
         gamecam = new OrthographicCamera();
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
         forestBackGround = new Texture("Sceneries/Phase01.jpg");
-        //woodPlatform1 = new Texture("Platforms/wood_tileset.png");
+        // woodPlatform1 = new Texture("Platforms/wood_tileset.png");
         this.player = player;
         this.batch = batch;
         createPhysicShapes();
+        shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setAutoShapeType(true);
     }
+
     @Override
     public void show() {
 
@@ -59,11 +61,15 @@ public class Phase1 implements Screen {
         player.render(phasePhysicShapes);
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
-        //batch.draw(woodPlatform1, 400, 200);
-        //batch.draw(woodPlatform1, 80, 400);
-        //batch.draw(woodPlatform1, 660, 400);
+        // batch.draw(woodPlatform1, 400, 200);
+        // batch.draw(woodPlatform1, 80, 400);
+        // batch.draw(woodPlatform1, 660, 400);
         batch.draw(player.getMainImage(), player.getPositionX(), player.getPositionY());
         batch.end();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.GREEN);
+        //shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
+        shapeRenderer.end();
     }
 
     @Override

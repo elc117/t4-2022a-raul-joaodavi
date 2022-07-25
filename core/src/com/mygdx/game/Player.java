@@ -17,8 +17,7 @@ public class Player {
     private float timeInAir;
     private float startJump;
     private boolean jumping;
-
-    Rectangle body;
+    private Rectangle hitBox;
 
     public float gravity;
 
@@ -26,13 +25,13 @@ public class Player {
     {
         this.name = name;
         mainImage = new Texture(imageLink);
-        this.positionX = positionX;
-        this.positionY = positionY;
+        hitBox = new Rectangle(positionX, positionY, 55, 55);
+        this.positionX = positionX - 38;
+        this.positionY = positionY - 42;
         this.moveSpeedX = moveSpeedX;
         this.jumpSpeed = jumpSpeed;
         this.gravity = gravity;
         timeInAir = 0;
-        body = new Rectangle(positionX, positionY, mainImage.getWidth(), mainImage.getHeight());
     }
 
     public Texture getMainImage() {
@@ -41,6 +40,10 @@ public class Player {
 
     public float getPositionX() {
         return positionX;
+    }
+
+    public Rectangle getHitBox() {
+        return hitBox;
     }
 
     public void setPositionX(float positionX) {
@@ -57,7 +60,7 @@ public class Player {
 
     public void moveX(ArrayList<Rectangle> objects)
     {
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && positionX < 620)
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && hitBox.x + hitBox.width < 750)
         {
             float newPositionX = positionX += moveSpeedX;
             for (int i = 0; i < objects.toArray().length; i++)
@@ -66,7 +69,7 @@ public class Player {
             }
             positionX = newPositionX;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && positionX > -25)
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && hitBox.x > 50)
         {
             float newPositionX = positionX -= moveSpeedX;
             for (int i = 0; i < objects.toArray().length; i++)
@@ -79,19 +82,19 @@ public class Player {
 
     public boolean grounded(ArrayList<Rectangle> objects) 
     {
-        if(positionY <= 47)
+        if(hitBox.y <= 55)
             return true;
         else if (Gdx.input.isKeyPressed(Input.Keys.S))
             return false;
-        else if(positionX > -15 && positionX < 85 && positionY >= 160 && positionY <= 170)
+        else if(hitBox.x > 70 && hitBox.x < 170 && hitBox.y >= 165 && hitBox.y <= 175)
             return true;
-        else if(positionX > 240 && positionX < 340 && positionY >= 245 && positionY <= 255)
+        else if(hitBox.x > 320 && hitBox.x < 420 && hitBox.y >= 250 && hitBox.y <= 260)
             return true;
-        else if(positionX > -15 && positionX < 85 && positionY >= 353 && positionY <= 363)
+        else if(hitBox.x > 70 && hitBox.x < 170 && hitBox.y >= 360 && hitBox.y <= 370)
             return true;
-        else if(positionX > 485 && positionX < 585 && positionY >= 160 && positionY <= 170)
+        else if(hitBox.x > 570 && hitBox.x < 670 && hitBox.y >= 165 && hitBox.y <= 175)
             return true;
-        else if(positionX > 485 && positionX < 585 && positionY >= 353 && positionY <= 363)
+        else if(hitBox.x > 570 && hitBox.x < 670 && hitBox.y >= 360 && hitBox.y <= 370)
             return true;
         else
             return false;
@@ -99,7 +102,7 @@ public class Player {
 
     public void jump(ArrayList<Rectangle> objects)
     {   
-        if(positionY > 470) {
+        if(hitBox.y + hitBox.height > 550) {
             jumping = false;
         } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded(objects)) {
             startJump = positionY;
@@ -115,11 +118,7 @@ public class Player {
     public void gravityEffect(ArrayList<Rectangle> objects)
     {
         float newPositionY = positionY - gravity * timeInAir;
-        for (int i = 0; i < objects.toArray().length; i++)
-        {
-            //if () return;
-        }
-        if(positionY > 47 && !jumping && !grounded(objects)) {
+        if(hitBox.y > 55 && !jumping && !grounded(objects)) {
             positionY = newPositionY;
             timeInAir += 0.1;
         } else {
@@ -127,11 +126,19 @@ public class Player {
         }
     }
 
+    private void hitBoxPosition(ArrayList<Rectangle> objects) {
+        hitBox.x = positionX + 38;
+        hitBox.y = positionY + 42;
+    }
+
     public void render(ArrayList<Rectangle> objects)
     {
         moveX(objects);
         jump(objects);
         gravityEffect(objects);
+        hitBoxPosition(objects);
+        //System.out.println(hitBox.x);
+        //System.out.println(hitBox.y);
     }
 
 }
