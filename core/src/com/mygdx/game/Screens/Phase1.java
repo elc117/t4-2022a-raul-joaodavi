@@ -41,7 +41,6 @@ public class Phase1 implements Screen {
         gamecam = new OrthographicCamera();
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
         forestBackGround = new Texture("Sceneries/Phase01.jpg");
-        // woodPlatform1 = new Texture("Platforms/wood_tileset.png");
         this.player = player;
         this.batch = batch;
         createPhysicShapes();
@@ -58,13 +57,10 @@ public class Phase1 implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        player.render(phasePhysicShapes);
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
-        // batch.draw(woodPlatform1, 400, 200);
-        // batch.draw(woodPlatform1, 80, 400);
-        // batch.draw(woodPlatform1, 660, 400);
-        batch.draw(player.getMainImage(), player.getPositionX(), player.getPositionY());
+        batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
+        player.update(phasePhysicShapes, delta);
         batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GREEN);

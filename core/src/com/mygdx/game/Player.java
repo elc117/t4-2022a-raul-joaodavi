@@ -2,14 +2,16 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.ai.btree.decorator.Repeat;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 
 public class Player {
-    private String name;
-    private Texture mainImage;
     private float positionX;
     private float positionY;
     private float moveSpeedX;
@@ -17,25 +19,41 @@ public class Player {
     private float timeInAir;
     private float startJump;
     private boolean jumping;
+    private boolean right;
+    private boolean running;
     private Rectangle hitBox;
+    private Animation runAnimation;
+    private Animation idleAnimation;
+    private Animation jumpAnimation;
 
     public float gravity;
 
-    public Player(String name, String imageLink, float positionX, float positionY, float moveSpeedX, float jumpSpeed, float gravity)
+    public Player(float positionX, float positionY, float moveSpeedX, float jumpSpeed, float gravity)
     {
-        this.name = name;
-        mainImage = new Texture(imageLink);
+        Texture texture = new Texture("Character/Archer/SpriteSheets/Run.png");
+        runAnimation = new Animation(new TextureRegion(texture), 8, 0.5f, true);
+        texture = new Texture("Character/Archer/SpriteSheets/Idle.png");
+        idleAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, true);
+        texture = new Texture("Character/Archer/SpriteSheets/Jump2.png");
+        jumpAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, false);
         hitBox = new Rectangle(positionX, positionY, 55, 55);
         this.positionX = positionX - 38;
         this.positionY = positionY - 42;
         this.moveSpeedX = moveSpeedX;
         this.jumpSpeed = jumpSpeed;
         this.gravity = gravity;
+        right = true;
+        running = false;
         timeInAir = 0;
     }
 
-    public Texture getMainImage() {
-        return mainImage;
+    public TextureRegion getAnimation() {
+        if (running && grounded())
+            return runAnimation.getFrame();
+        else if (!grounded())
+            return jumpAnimation.getFrame();
+        else
+            return idleAnimation.getFrame();
     }
 
     public float getPositionX() {
@@ -63,24 +81,28 @@ public class Player {
         if (Gdx.input.isKeyPressed(Input.Keys.D) && hitBox.x + hitBox.width < 750)
         {
             float newPositionX = positionX += moveSpeedX;
-            for (int i = 0; i < objects.toArray().length; i++)
-            {
-                //if () return;
+            if(!right) {
+                runAnimation.flip();
+                idleAnimation.flip();
+                jumpAnimation.flip();
             }
+            right = true;
             positionX = newPositionX;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A) && hitBox.x > 50)
         {
             float newPositionX = positionX -= moveSpeedX;
-            for (int i = 0; i < objects.toArray().length; i++)
-            {
-                //if() return;
+            if(right) {
+                runAnimation.flip();
+                idleAnimation.flip();
+                jumpAnimation.flip();
             }
+            right = false;
             positionX = newPositionX;
         }
     }
 
-    public boolean grounded(ArrayList<Rectangle> objects) 
+    public boolean grounded() 
     {
         if(hitBox.y <= 55)
             return true;
@@ -104,7 +126,7 @@ public class Player {
     {   
         if(hitBox.y + hitBox.height > 550) {
             jumping = false;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded(objects)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded()) {
             startJump = positionY;
             jumping = true;
         } else if (!Gdx.input.isKeyPressed(Input.Keys.SPACE) || positionY > startJump + 150) {
@@ -118,11 +140,19 @@ public class Player {
     public void gravityEffect(ArrayList<Rectangle> objects)
     {
         float newPositionY = positionY - gravity * timeInAir;
-        if(hitBox.y > 55 && !jumping && !grounded(objects)) {
+        if(hitBox.y > 55 && !jumping && !grounded()) {
             positionY = newPositionY;
             timeInAir += 0.1;
         } else {
             timeInAir = 0;
+        }
+    }
+
+    private void isRunning(ArrayList<Rectangle> objects) {
+        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.A)) {
+            running = true;
+        } else {
+            running = false;
         }
     }
 
@@ -131,12 +161,16 @@ public class Player {
         hitBox.y = positionY + 42;
     }
 
-    public void render(ArrayList<Rectangle> objects)
+    public void update(ArrayList<Rectangle> objects, float dt)
     {
+        runAnimation.update(dt);
+        idleAnimation.update(dt);
+        jumpAnimation.update(dt);
         moveX(objects);
         jump(objects);
         gravityEffect(objects);
         hitBoxPosition(objects);
+        isRunning(objects);
         //System.out.println(hitBox.x);
         //System.out.println(hitBox.y);
     }
