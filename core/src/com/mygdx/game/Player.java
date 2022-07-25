@@ -81,6 +81,8 @@ public class Player {
     {
         if(positionY <= 47)
             return true;
+        else if (Gdx.input.isKeyPressed(Input.Keys.S))
+            return false;
         else if(positionX > -15 && positionX < 85 && positionY >= 160 && positionY <= 170)
             return true;
         else if(positionX > 240 && positionX < 340 && positionY >= 245 && positionY <= 255)
