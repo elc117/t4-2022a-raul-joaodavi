@@ -38,14 +38,18 @@ public class Animation {
             }
             if(frame >= frameCount)
                 frame = 0;
-            if(!repeat && dt > exeTime)
-                firstExe = false;
+                if(!repeat)
+                    firstExe = false;
         }
     }
 
     public void flip(){
         for(TextureRegion region : frames)
             region.flip(true, false);
+    }
+
+    public void reset() {
+        frame = 0;
     }
 
     public TextureRegion getFrame(){
