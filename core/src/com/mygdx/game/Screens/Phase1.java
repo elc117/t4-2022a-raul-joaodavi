@@ -51,6 +51,7 @@ public class Phase1 implements Screen {
         shapeRenderer.setAutoShapeType(true);
         music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Music01.mp3"));
 		music.setLooping(true);
+        music.setVolume(0.3f);
 		music.play();
     }
 
