@@ -60,7 +60,7 @@ public class Phase1 implements Screen {
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
-        player.update(phasePhysicShapes, delta);
+        player.update(phasePhysicShapes, delta, batch);
         batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GREEN);

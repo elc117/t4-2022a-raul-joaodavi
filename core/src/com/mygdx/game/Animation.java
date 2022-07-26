@@ -52,6 +52,10 @@ public class Animation {
         frame = 0;
     }
 
+    public int getFrameIdx() {
+        return frame;
+    }
+
     public TextureRegion getFrame(){
         return frames.get(frame);
     }

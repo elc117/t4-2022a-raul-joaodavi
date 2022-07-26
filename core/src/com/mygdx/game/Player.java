@@ -8,8 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Projectile;
 
-import java.util.ArrayList;
+import java.util.*;  
 
 public class Player {
     private float positionX;
@@ -22,11 +23,13 @@ public class Player {
     private boolean right;
     private boolean running;
     private boolean attacking;
+    private boolean shooted;
     private Rectangle hitBox;
     private Animation runAnimation;
     private Animation idleAnimation;
     private Animation jumpAnimation;
     private Animation attackAnimation;
+    List<Projectile> projectiles;  
 
     public float gravity;
 
@@ -49,6 +52,8 @@ public class Player {
         running = false;
         attacking = false;
         timeInAir = 0;
+        shooted = false;
+        projectiles = new ArrayList<Projectile>();  
     }
 
     public TextureRegion getAnimation() {
@@ -151,11 +156,21 @@ public class Player {
         }
     }
 
+    private void shoot() {
+        projectiles.add(new Projectile(hitBox.x + 15, hitBox.y + 30, 10, right, "Character/Archer/Projectile.png"));
+    }
+
     private void attack() {
         if (Gdx.input.isKeyPressed(Input.Keys.Q) && grounded() && !running) {
             if(!attacking)
                 attackAnimation.reset();
             attacking = true;
+            if(attackAnimation.getFrameIdx() == 6 && !shooted) {
+                shoot();
+                shooted = true;
+            } else if(attackAnimation.getFrameIdx() != 6) {
+                shooted = false;
+            }
         } else
             attacking = false;
     }
@@ -173,11 +188,14 @@ public class Player {
         hitBox.y = positionY + 42;
     }
 
-    public void update(ArrayList<Rectangle> objects, float dt) {
+    public void update(ArrayList<Rectangle> objects, float dt, SpriteBatch batch) {
         runAnimation.update(dt);
         idleAnimation.update(dt);
         jumpAnimation.update(dt);
         attackAnimation.update(dt);
+        for (Projectile projectile : projectiles) {
+            projectile.drawProjectile(batch, 50, 750);
+        }
         attack();
         moveX(objects);
         jump(objects);
