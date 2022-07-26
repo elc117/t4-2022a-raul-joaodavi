@@ -10,7 +10,7 @@ import com.mygdx.game.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Projectile;
 
-import java.util.*;  
+import java.util.*;
 
 public class Player {
     private float positionX;
@@ -19,17 +19,20 @@ public class Player {
     private float jumpSpeed;
     private float timeInAir;
     private float startJump;
+    private float rollSpeed;
     private boolean jumping;
     private boolean right;
     private boolean running;
     private boolean attacking;
+    private boolean rolling;
     private boolean shooted;
     private Rectangle hitBox;
     private Animation runAnimation;
     private Animation idleAnimation;
     private Animation jumpAnimation;
     private Animation attackAnimation;
-    List<Projectile> projectiles;  
+    private Animation rollAnimation;
+    List<Projectile> projectiles;
 
     public float gravity;
 
@@ -42,6 +45,8 @@ public class Player {
         jumpAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, true);
         texture = new Texture("Character/Archer/SpriteSheets/Attack.png");
         attackAnimation = new Animation(new TextureRegion(texture), 7, 0.5f, true);
+        texture = new Texture("Character/Archer/SpriteSheets/Rolling.png");
+        rollAnimation = new Animation(new TextureRegion(texture), 7, 0.5f, true);
         hitBox = new Rectangle(positionX, positionY, 55, 55);
         this.positionX = positionX - 38;
         this.positionY = positionY - 42;
@@ -53,11 +58,15 @@ public class Player {
         attacking = false;
         timeInAir = 0;
         shooted = false;
-        projectiles = new ArrayList<Projectile>();  
+        rolling = false;
+        rollSpeed = 10;
+        projectiles = new ArrayList<Projectile>();
     }
 
     public TextureRegion getAnimation() {
-        if (running && grounded())
+        if (rolling)
+            return rollAnimation.getFrame();
+        else if (running && grounded())
             return runAnimation.getFrame();
         else if (!grounded())
             return jumpAnimation.getFrame();
@@ -89,23 +98,33 @@ public class Player {
 
     public void moveX(ArrayList<Rectangle> objects) {
         if (Gdx.input.isKeyPressed(Input.Keys.D) && hitBox.x + hitBox.width < 750) {
-            float newPositionX = positionX += moveSpeedX;
+            float newPositionX;
+            if (rolling)
+                newPositionX = positionX + rollSpeed;
+            else
+                newPositionX = positionX + moveSpeedX;
             if (!right) {
                 runAnimation.flip();
                 idleAnimation.flip();
                 jumpAnimation.flip();
                 attackAnimation.flip();
+                rollAnimation.flip();
             }
             right = true;
             positionX = newPositionX;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A) && hitBox.x > 50) {
-            float newPositionX = positionX -= moveSpeedX;
+            float newPositionX;
+            if (rolling)
+                newPositionX = positionX - rollSpeed;
+            else
+                newPositionX = positionX - moveSpeedX;
             if (right) {
                 runAnimation.flip();
                 idleAnimation.flip();
                 jumpAnimation.flip();
                 attackAnimation.flip();
+                rollAnimation.flip();
             }
             right = false;
             positionX = newPositionX;
@@ -162,17 +181,28 @@ public class Player {
 
     private void attack() {
         if (Gdx.input.isKeyPressed(Input.Keys.Q) && grounded() && !running) {
-            if(!attacking)
+            if (!attacking)
                 attackAnimation.reset();
             attacking = true;
-            if(attackAnimation.getFrameIdx() == 6 && !shooted) {
+            if (attackAnimation.getFrameIdx() == 6 && !shooted) {
                 shoot();
                 shooted = true;
-            } else if(attackAnimation.getFrameIdx() != 6) {
+            } else if (attackAnimation.getFrameIdx() != 6) {
                 shooted = false;
             }
         } else
             attacking = false;
+    }
+
+    private void roll() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && grounded()) {
+            if (!rolling)
+                rollAnimation.reset();
+            rolling = true;
+        }
+        if (rollAnimation.getFrameIdx() == 6) {
+            rolling = false;
+        }
     }
 
     private void isRunning(ArrayList<Rectangle> objects) {
@@ -193,9 +223,11 @@ public class Player {
         idleAnimation.update(dt);
         jumpAnimation.update(dt);
         attackAnimation.update(dt);
+        rollAnimation.update(dt);
         for (Projectile projectile : projectiles) {
             projectile.drawProjectile(batch, 50, 750);
         }
+        roll();
         attack();
         moveX(objects);
         jump(objects);
