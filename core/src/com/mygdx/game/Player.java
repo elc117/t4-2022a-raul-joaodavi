@@ -218,6 +218,14 @@ public class Player {
         hitBox.y = positionY + 42;
     }
 
+    private void removeShoots() {
+        for (int i = 0; i < projectiles.size(); i++) {
+            if (!projectiles.get(i).getActivity()) {
+                projectiles.remove(i);
+            }
+        }
+    }
+
     public void update(ArrayList<Rectangle> objects, float dt, SpriteBatch batch) {
         runAnimation.update(dt);
         idleAnimation.update(dt);
@@ -227,6 +235,7 @@ public class Player {
         for (Projectile projectile : projectiles) {
             projectile.drawProjectile(batch, 50, 750);
         }
+        removeShoots();
         roll();
         attack();
         moveX(objects);

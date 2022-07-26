@@ -13,6 +13,8 @@ import com.mygdx.game.MedievalGame;
 import com.mygdx.game.Player;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ public class Phase1 implements Screen {
     Player player;
     private ShapeRenderer shapeRenderer;
     ArrayList<Rectangle> phasePhysicShapes;
+    Music music;
 
     private void createPhysicShapes() {
         phasePhysicShapes = new ArrayList<Rectangle>();
@@ -46,6 +49,9 @@ public class Phase1 implements Screen {
         createPhysicShapes();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
+        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Music01.mp3"));
+		music.setLooping(true);
+		music.play();
     }
 
     @Override
