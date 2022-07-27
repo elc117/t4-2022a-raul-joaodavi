@@ -31,6 +31,7 @@ public class Player {
     private Animation runAnimation;
     private Animation idleAnimation;
     private Animation jumpAnimation;
+    private Animation fallAnimation;
     private Animation attackAnimation;
     private Animation rollAnimation;
     List<Projectile> projectiles;
@@ -42,8 +43,10 @@ public class Player {
         runAnimation = new Animation(new TextureRegion(texture), 8, 0.5f, true);
         texture = new Texture("Character/Archer/SpriteSheets/Idle.png");
         idleAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, true);
-        texture = new Texture("Character/Archer/SpriteSheets/Jump2.png");
+        texture = new Texture("Character/Archer/SpriteSheets/Jump.png");
         jumpAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, true);
+        texture = new Texture("Character/Archer/SpriteSheets/Fall.png");
+        fallAnimation = new Animation(new TextureRegion(texture), 2, 0.5f, false);
         texture = new Texture("Character/Archer/SpriteSheets/Attack.png");
         attackAnimation = new Animation(new TextureRegion(texture), 7, 0.5f, true);
         texture = new Texture("Character/Archer/SpriteSheets/Rolling.png");
@@ -70,8 +73,10 @@ public class Player {
             return rollAnimation.getFrame();
         else if (running && grounded)
             return runAnimation.getFrame();
-        else if (!grounded)
+        else if (jumping)
             return jumpAnimation.getFrame();
+        else if (!grounded)
+            return fallAnimation.getFrame();
         else if (attacking)
             return attackAnimation.getFrame();
         else
@@ -115,6 +120,7 @@ public class Player {
                 jumpAnimation.flip();
                 attackAnimation.flip();
                 rollAnimation.flip();
+                fallAnimation.flip();
             }
             right = true;
             positionX = newPositionX;
@@ -131,6 +137,7 @@ public class Player {
                 jumpAnimation.flip();
                 attackAnimation.flip();
                 rollAnimation.flip();
+                fallAnimation.flip();
             }
             right = false;
             positionX = newPositionX;
@@ -219,6 +226,7 @@ public class Player {
         jumpAnimation.update(dt);
         attackAnimation.update(dt);
         rollAnimation.update(dt);
+        fallAnimation.update(dt);
         for (Projectile projectile : projectiles) {
             projectile.drawProjectile(batch, 50, 750);
         }
