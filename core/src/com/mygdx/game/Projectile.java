@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.audio.Sound;
 
 
 public class Projectile {
     private Rectangle projectile;
     private TextureRegion img;
+    private Sound missedSound;
     private float speed;
     boolean right;
     boolean active;
@@ -26,6 +28,7 @@ public class Projectile {
             projectile.x -= 40;
         }
         active = true;
+        missedSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/ArrowWallSound.mp3"));
     }
 
     public Rectangle getProjectile () {
@@ -48,8 +51,10 @@ public class Projectile {
     }
 
     private void verify (float lim1, float lim2) {
-        if (projectile.x <= lim1 || projectile.x + projectile.width >= lim2)
+        if (projectile.x <= lim1 || projectile.x + projectile.width >= lim2) {
             active = false;
+            missedSound.play(0.1f);
+        }
     }
 
     public void drawProjectile (SpriteBatch batch, float lim1, float lim2) {

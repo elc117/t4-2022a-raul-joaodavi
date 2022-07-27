@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ai.btree.decorator.Repeat;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -27,6 +28,8 @@ public class Player {
     private boolean rolling;
     private boolean shooted;
     private boolean grounded;
+    private Sound jumpSound;
+    private Sound shootSound;
     private Rectangle hitBox;
     private Animation runAnimation;
     private Animation idleAnimation;
@@ -66,6 +69,7 @@ public class Player {
         grounded = true;
         rollSpeed = 10;
         projectiles = new ArrayList<Projectile>();
+        shootSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/ShootSound.mp3"));
     }
 
     public TextureRegion getAnimation() {
@@ -171,6 +175,7 @@ public class Player {
 
     private void shoot() {
         projectiles.add(new Projectile(hitBox.x + 15, hitBox.y + 30, 10, right, "Character/Archer/Projectile.png"));
+        shootSound.play(0.3f);
     }
 
     private void attack() {

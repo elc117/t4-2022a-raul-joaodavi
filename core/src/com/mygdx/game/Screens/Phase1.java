@@ -62,6 +62,7 @@ public class Phase1 implements Screen {
     public Phase1(MedievalGame game, SpriteBatch batch, Player player) {
         this.medievalGame = game;
         gamecam = new OrthographicCamera();
+        gamecam.setToOrtho(false, 800, 600);
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
         forestBackGround = new Texture("Sceneries/Phase01.jpg");
         this.player = player;
@@ -69,7 +70,7 @@ public class Phase1 implements Screen {
         createPhysicShapes();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
-        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Music01.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music01.mp3"));
 		music.setLooping(true);
         music.setVolume(0.3f);
 		music.play();
