@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Screens.Phase1;
+import com.mygdx.game.Screens.Phase3;
 
 public class MedievalGame extends Game {
 	// virtual height and width
@@ -19,7 +20,7 @@ public class MedievalGame extends Game {
 		player = new Player(55, 55, 5, 6, 2);
 		// setting up screen of the game
 		int a = 1;
-		setScreen(new Phase1(this, batch, player));
+		setScreen(new Phase3(this, batch, player));
 	}
 
 	@Override

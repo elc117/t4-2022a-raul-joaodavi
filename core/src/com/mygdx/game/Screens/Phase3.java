@@ -10,11 +10,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MedievalGame;
+import com.mygdx.game.Hydra;
 import com.mygdx.game.Player;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.Input;
 
 import java.util.ArrayList;
@@ -30,6 +30,8 @@ public class Phase3 implements Screen {
     // how the game fits the devices display
     private Viewport gamePort;
     Player player;
+
+    Hydra hydra;
     private ShapeRenderer shapeRenderer;
     ArrayList<Rectangle> phasePhysicShapes;
     Music music;
@@ -66,6 +68,7 @@ public class Phase3 implements Screen {
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
         forestBackGround = new Texture("Sceneries/Phase01.jpg");
         this.player = player;
+        this.hydra = new Hydra(1000, (float)(100), (float)(100), 20, 50, 25, 50);
         this.batch = batch;
         createPhysicShapes();
         shapeRenderer = new ShapeRenderer();
@@ -88,6 +91,7 @@ public class Phase3 implements Screen {
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
+        batch.draw(hydra.getSprite(), hydra.getPositionX(), hydra.getPositionY());
         player.update(phasePhysicShapes, delta, batch);
         isGrounded();
         batch.end();

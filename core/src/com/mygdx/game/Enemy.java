@@ -8,11 +8,12 @@ public class Enemy {
     protected float moveSpeedX;
     protected float moveSpeedY;
 
+
     public Enemy(int life, float positionX, float positionY, int strength, float moveSpeedX, float moveSpeedY)
     {
         this.life = life;
-        this.positionX = positionX;
-        this.positionY = positionY;
+        this.positionX = positionX - 38;
+        this.positionY = positionY - 42;
         this.strength = strength;
         this.moveSpeedX = moveSpeedX;
         this.moveSpeedY = moveSpeedY;
