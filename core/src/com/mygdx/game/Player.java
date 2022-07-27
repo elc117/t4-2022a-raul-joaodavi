@@ -16,13 +16,13 @@ import java.util.*;
 public class Player {
     private float positionX;
     private float positionY;
-    private float moveSpeedX;
-    private float jumpSpeed;
-    private float timeInAir;
-    private float startJump;
-    private float rollSpeed;
-    private boolean jumping;
-    private boolean right;
+    private float moveSpeedX; // velocidade horizontal
+    private float jumpSpeed; // velocidade do pulo
+    private float timeInAir; // tempo no ar - usado para gravidade
+    private float startJump; // posicao do comeco do pulo (y)
+    private float rollSpeed; // velocidade de rolamento
+    private boolean jumping; // player esta pulando
+    private boolean isFacingRight;
     private boolean running;
     private boolean attacking;
     private boolean rolling;
@@ -61,7 +61,7 @@ public class Player {
         this.moveSpeedX = moveSpeedX;
         this.jumpSpeed = jumpSpeed;
         this.gravity = gravity;
-        right = true;
+        isFacingRight = true;
         running = false;
         attacking = false;
         timeInAir = 0;
@@ -120,7 +120,7 @@ public class Player {
                 newPositionX = positionX + rollSpeed;
             else
                 newPositionX = positionX + moveSpeedX;
-            if (!right) {
+            if (!isFacingRight) {
                 runAnimation.flip();
                 idleAnimation.flip();
                 jumpAnimation.flip();
@@ -128,7 +128,7 @@ public class Player {
                 rollAnimation.flip();
                 fallAnimation.flip();
             }
-            right = true;
+            isFacingRight = true;
             positionX = newPositionX;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A) && hitBox.x > 50) {
@@ -137,7 +137,7 @@ public class Player {
                 newPositionX = positionX - rollSpeed;
             else
                 newPositionX = positionX - moveSpeedX;
-            if (right) {
+            if (isFacingRight) {
                 runAnimation.flip();
                 idleAnimation.flip();
                 jumpAnimation.flip();
@@ -145,7 +145,7 @@ public class Player {
                 rollAnimation.flip();
                 fallAnimation.flip();
             }
-            right = false;
+            isFacingRight = false;
             positionX = newPositionX;
         }
     }
@@ -176,7 +176,7 @@ public class Player {
     }
 
     private void shoot() {
-        projectiles.add(new Projectile(hitBox.x + 15, hitBox.y + 30, 10, right, arrowTexture));
+        projectiles.add(new Projectile(hitBox.x + 15, hitBox.y + 30, 10, isFacingRight, arrowTexture));
         shootSound.play(0.3f);
     }
 
