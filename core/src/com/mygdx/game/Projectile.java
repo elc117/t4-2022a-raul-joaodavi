@@ -17,10 +17,9 @@ public class Projectile {
     boolean right;
     boolean active;
 
-    public Projectile (float x, float y, float speed, boolean right, String textureStr) {
-        Texture texture = new Texture(textureStr);
-        projectile = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
-        img = new TextureRegion(texture);
+    public Projectile (float x, float y, float speed, boolean right, Texture arrowTexture) {
+        projectile = new Rectangle(x, y, arrowTexture.getWidth(), arrowTexture.getHeight());
+        img = new TextureRegion(arrowTexture);
         this.speed = speed;
         this.right = right;
         if(!right) {

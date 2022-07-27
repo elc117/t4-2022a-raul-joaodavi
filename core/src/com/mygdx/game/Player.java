@@ -28,6 +28,7 @@ public class Player {
     private boolean rolling;
     private boolean shooted;
     private boolean grounded;
+    private Texture arrowTexture;
     private Sound jumpSound;
     private Sound shootSound;
     private Rectangle hitBox;
@@ -70,6 +71,7 @@ public class Player {
         rollSpeed = 10;
         projectiles = new ArrayList<Projectile>();
         shootSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/ShootSound.mp3"));
+        arrowTexture = new Texture("Projectiles/Arrow.png");
     }
 
     public TextureRegion getAnimation() {
@@ -174,7 +176,7 @@ public class Player {
     }
 
     private void shoot() {
-        projectiles.add(new Projectile(hitBox.x + 15, hitBox.y + 30, 10, right, "Character/Archer/Projectile.png"));
+        projectiles.add(new Projectile(hitBox.x + 15, hitBox.y + 30, 10, right, arrowTexture));
         shootSound.play(0.3f);
     }
 
