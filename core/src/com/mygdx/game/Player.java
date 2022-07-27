@@ -14,6 +14,7 @@ import com.mygdx.game.Projectile;
 import java.util.*;
 
 public class Player {
+    // ESTADO E CARACTERISTICAS DO PLAYER
     private float positionX;
     private float positionY;
     private float moveSpeedX; // velocidade horizontal
@@ -22,12 +23,14 @@ public class Player {
     private float startJump; // posicao do comeco do pulo (y)
     private float rollSpeed; // velocidade de rolamento
     private boolean jumping; // player esta pulando
-    private boolean isFacingRight;
-    private boolean running;
-    private boolean attacking;
-    private boolean rolling;
-    private boolean shooted;
-    private boolean grounded;
+    private boolean isFacingRight; // player virado para a direita
+    private boolean running; // player esta se movendo horizontalmente
+    private boolean attacking; // player esta atacando
+    private boolean rolling; // player esta em rolamento
+    private boolean shooted; // player atirou
+    private boolean grounded; // player esta no chao
+
+    // TEXTURAS, ANIMACOES, E SONS
     private Texture arrowTexture;
     private Sound jumpSound;
     private Sound shootSound;
@@ -38,10 +41,12 @@ public class Player {
     private Animation fallAnimation;
     private Animation attackAnimation;
     private Animation rollAnimation;
-    List<Projectile> projectiles;
+    List<Projectile> projectiles; // Spawnados quando atira, somem no contato
 
-    public float gravity;
+    public float gravity; // forca da gravidade
 
+
+    // CONSTRUTOR
     public Player(float positionX, float positionY, float moveSpeedX, float jumpSpeed, float gravity) {
         Texture texture = new Texture("Character/Archer/SpriteSheets/Run.png");
         runAnimation = new Animation(new TextureRegion(texture), 8, 0.5f, true);
@@ -74,6 +79,7 @@ public class Player {
         arrowTexture = new Texture("Projectiles/Arrow.png");
     }
 
+    // retorna animacao de acordo com o estado do jogador
     public TextureRegion getAnimation() {
         if (rolling)
             return rollAnimation.getFrame();
@@ -113,6 +119,7 @@ public class Player {
         this.grounded = grounded;
     }
 
+    // Movimento horizontal
     public void moveX(ArrayList<Rectangle> objects) {
         if (Gdx.input.isKeyPressed(Input.Keys.D) && hitBox.x + hitBox.width < 750) {
             float newPositionX;
@@ -175,13 +182,15 @@ public class Player {
         }
     }
 
+    // Spawner de projeteis
     private void shoot() {
         projectiles.add(new Projectile(hitBox.x + 15, hitBox.y + 30, 10, isFacingRight, arrowTexture));
         shootSound.play(0.3f);
     }
 
+    // Ataque por inpuit
     private void attack() {
-        if (Gdx.input.isKeyPressed(Input.Keys.Q) && grounded && !running) {
+        if (Gdx.input.isKeyPressed(Input.Keys.P) && grounded && !running) {
             if (!attacking)
                 attackAnimation.reset();
             attacking = true;
