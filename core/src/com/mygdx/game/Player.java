@@ -30,11 +30,12 @@ public class Player {
     private boolean shooted; // player atirou
     private boolean grounded; // player esta no chao
 
+    private Rectangle hitBox; // fisica (corpo) do jogador
+
     // TEXTURAS, ANIMACOES, E SONS
     private Texture arrowTexture;
     private Sound jumpSound;
     private Sound shootSound;
-    private Rectangle hitBox;
     private Animation runAnimation;
     private Animation idleAnimation;
     private Animation jumpAnimation;

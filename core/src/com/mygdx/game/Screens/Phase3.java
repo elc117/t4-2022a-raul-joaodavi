@@ -91,8 +91,10 @@ public class Phase3 implements Screen {
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
-        batch.draw(hydra.getSprite(), hydra.getPositionX(), hydra.getPositionY());
+        batch.draw(hydra.getAnimation1().getFrame(), hydra.getPositionX(), hydra.getPositionY());
         player.update(phasePhysicShapes, delta, batch);
+        hydra.getAnimation1().update(delta);
+        hydra.update(delta);
         isGrounded();
         batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);

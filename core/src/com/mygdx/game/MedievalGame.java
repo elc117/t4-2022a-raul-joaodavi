@@ -14,6 +14,8 @@ public class MedievalGame extends Game {
 
 	public Player player;
 
+	public int phaseController;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -21,6 +23,7 @@ public class MedievalGame extends Game {
 		// setting up screen of the game
 		int a = 1;
 		setScreen(new Phase3(this, batch, player));
+		phaseController = 0;
 	}
 
 	@Override
