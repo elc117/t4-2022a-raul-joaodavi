@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.Input;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,25 @@ public class Phase1 implements Screen {
         phasePhysicShapes = new ArrayList<Rectangle>();
         // ground
         phasePhysicShapes.add(new Rectangle(0, 0, MedievalGame.V_WIDTH, (float) MedievalGame.V_HEIGHT / 4));
+    }
+
+    public void isGrounded() {
+        if (player.getHitBox().y <= 55)
+            player.setGrounded(true);
+        else if (Gdx.input.isKeyPressed(Input.Keys.S))
+            player.setGrounded(false);
+        else if (player.getHitBox().x > 70 && player.getHitBox().x < 170 && player.getHitBox().y >= 165 && player.getHitBox().y <= 175)
+            player.setGrounded(true);
+        else if (player.getHitBox().x > 320 && player.getHitBox().x < 420 && player.getHitBox().y >= 250 && player.getHitBox().y <= 260)
+            player.setGrounded(true);
+        else if (player.getHitBox().x > 70 && player.getHitBox().x < 170 && player.getHitBox().y >= 360 && player.getHitBox().y <= 370)
+            player.setGrounded(true);
+        else if (player.getHitBox().x > 570 && player.getHitBox().x < 670 && player.getHitBox().y >= 165 && player.getHitBox().y <= 175)
+            player.setGrounded(true);
+        else if (player.getHitBox().x > 570 && player.getHitBox().x < 670 && player.getHitBox().y >= 360 && player.getHitBox().y <= 370)
+            player.setGrounded(true);
+        else
+            player.setGrounded(false);
     }
 
     public Phase1(MedievalGame game, SpriteBatch batch, Player player) {
@@ -68,6 +88,7 @@ public class Phase1 implements Screen {
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
         player.update(phasePhysicShapes, delta, batch);
+        isGrounded();
         batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GREEN);

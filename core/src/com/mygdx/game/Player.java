@@ -26,6 +26,7 @@ public class Player {
     private boolean attacking;
     private boolean rolling;
     private boolean shooted;
+    private boolean grounded;
     private Rectangle hitBox;
     private Animation runAnimation;
     private Animation idleAnimation;
@@ -59,6 +60,7 @@ public class Player {
         timeInAir = 0;
         shooted = false;
         rolling = false;
+        grounded = true;
         rollSpeed = 10;
         projectiles = new ArrayList<Projectile>();
     }
@@ -66,9 +68,9 @@ public class Player {
     public TextureRegion getAnimation() {
         if (rolling)
             return rollAnimation.getFrame();
-        else if (running && grounded())
+        else if (running && grounded)
             return runAnimation.getFrame();
-        else if (!grounded())
+        else if (!grounded)
             return jumpAnimation.getFrame();
         else if (attacking)
             return attackAnimation.getFrame();
@@ -94,6 +96,10 @@ public class Player {
 
     public void setPositionY(float positionY) {
         this.positionY = positionY;
+    }
+
+    public void setGrounded (boolean grounded) {
+        this.grounded = grounded;
     }
 
     public void moveX(ArrayList<Rectangle> objects) {
@@ -131,29 +137,10 @@ public class Player {
         }
     }
 
-    public boolean grounded() {
-        if (hitBox.y <= 55)
-            return true;
-        else if (Gdx.input.isKeyPressed(Input.Keys.S))
-            return false;
-        else if (hitBox.x > 70 && hitBox.x < 170 && hitBox.y >= 165 && hitBox.y <= 175)
-            return true;
-        else if (hitBox.x > 320 && hitBox.x < 420 && hitBox.y >= 250 && hitBox.y <= 260)
-            return true;
-        else if (hitBox.x > 70 && hitBox.x < 170 && hitBox.y >= 360 && hitBox.y <= 370)
-            return true;
-        else if (hitBox.x > 570 && hitBox.x < 670 && hitBox.y >= 165 && hitBox.y <= 175)
-            return true;
-        else if (hitBox.x > 570 && hitBox.x < 670 && hitBox.y >= 360 && hitBox.y <= 370)
-            return true;
-        else
-            return false;
-    }
-
     public void jump(ArrayList<Rectangle> objects) {
         if (hitBox.y + hitBox.height > 550) {
             jumping = false;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded()) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded) {
             jumpAnimation.reset();
             startJump = positionY;
             jumping = true;
@@ -167,7 +154,7 @@ public class Player {
 
     public void gravityEffect(ArrayList<Rectangle> objects) {
         float newPositionY = positionY - gravity * timeInAir;
-        if (hitBox.y > 55 && !jumping && !grounded()) {
+        if (hitBox.y > 55 && !jumping && !grounded) {
             positionY = newPositionY;
             timeInAir += 0.1;
         } else {
@@ -180,7 +167,7 @@ public class Player {
     }
 
     private void attack() {
-        if (Gdx.input.isKeyPressed(Input.Keys.Q) && grounded() && !running) {
+        if (Gdx.input.isKeyPressed(Input.Keys.Q) && grounded && !running) {
             if (!attacking)
                 attackAnimation.reset();
             attacking = true;
@@ -195,7 +182,7 @@ public class Player {
     }
 
     private void roll() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && grounded()) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && grounded) {
             if (!rolling)
                 rollAnimation.reset();
             rolling = true;
