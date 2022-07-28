@@ -120,6 +120,7 @@ public class Phase1 implements Screen {
 
     @Override
     public void dispose() {
-
+        music.dispose();
+        shapeRenderer.dispose();
     }
 }

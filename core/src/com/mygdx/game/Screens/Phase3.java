@@ -66,14 +66,14 @@ public class Phase3 implements Screen {
         gamecam = new OrthographicCamera();
         gamecam.setToOrtho(false, 800, 600);
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
-        forestBackGround = new Texture("Sceneries/Phase01.jpg");
+        forestBackGround = new Texture("Sceneries/Phase03.jpg");
         this.player = player;
         this.hydra = new Hydra(1000, (float)(100), (float)(100), 20, 50, 25, 50);
         this.batch = batch;
         createPhysicShapes();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
-        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music01.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music03.mp3"));
         music.setLooping(true);
         music.setVolume(0.3f);
         music.play();
@@ -126,6 +126,7 @@ public class Phase3 implements Screen {
 
     @Override
     public void dispose() {
-
+        music.dispose();
+        shapeRenderer.dispose();
     }
 }
