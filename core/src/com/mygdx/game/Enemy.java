@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.math.Rectangle;
+
 public class Enemy {
     protected int life;
     protected float positionX;
@@ -7,13 +9,14 @@ public class Enemy {
     protected int strength;
     protected float moveSpeedX;
     protected float moveSpeedY;
+    protected Rectangle hitBox;
 
 
     public Enemy(int life, float positionX, float positionY, int strength, float moveSpeedX, float moveSpeedY)
     {
         this.life = life;
-        this.positionX = positionX - 38;
-        this.positionY = positionY - 42;
+        this.positionX = positionX;
+        this.positionY = positionY;
         this.strength = strength;
         this.moveSpeedX = moveSpeedX;
         this.moveSpeedY = moveSpeedY;
@@ -49,5 +52,9 @@ public class Enemy {
 
     public void setStrength(int strength) {
         this.strength = strength;
+    }
+
+    public void update (float dt) {
+        
     }
 }

@@ -7,8 +7,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Bat;
+import com.mygdx.game.Enemy;
 import com.mygdx.game.MedievalGame;
 import com.mygdx.game.Player;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -31,6 +34,7 @@ public class Phase1 implements Screen {
     private Viewport gamePort;
     Player player;
     private ShapeRenderer shapeRenderer;
+    private ArrayList<Enemy> enemies;
     ArrayList<Rectangle> phasePhysicShapes;
     Music music;
 
@@ -73,7 +77,10 @@ public class Phase1 implements Screen {
         music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music01.mp3"));
 		music.setLooping(true);
         music.setVolume(0.3f);
+        player.setLife(3);
 		music.play();
+        enemies = new ArrayList<Enemy>();
+        enemies.add(new Bat(3, 600, 400, 1, 10, 5));
     }
 
     @Override
@@ -90,6 +97,12 @@ public class Phase1 implements Screen {
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
         player.update(phasePhysicShapes, delta, batch);
         isGrounded();
+        for (Enemy enemy : enemies) {
+            enemy.update(delta);
+            if(enemy instanceof Bat) {
+                batch.draw(((Bat)enemy).getAnimation(), 600, 400);
+            }
+        }
         batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GREEN);

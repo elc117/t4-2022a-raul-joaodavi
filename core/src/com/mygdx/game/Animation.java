@@ -9,7 +9,6 @@ public class Animation {
     private float currentFrameTime;
     private int frameCount;
     private int frame;
-    private float exeTime;
     private boolean repeat;
     private boolean firstExe;
 
@@ -26,7 +25,6 @@ public class Animation {
         frame = 0;
         this.repeat = repeat;
         firstExe = true;
-        exeTime = cycleTime * frameCount;
     }
 
     public void update(float dt){
