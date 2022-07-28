@@ -14,6 +14,7 @@ import com.mygdx.game.Bat;
 import com.mygdx.game.Enemy;
 import com.mygdx.game.MedievalGame;
 import com.mygdx.game.Player;
+import com.mygdx.game.Projectile;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.audio.Music;
@@ -63,6 +64,18 @@ public class Phase1 implements Screen {
             player.setGrounded(false);
     }
 
+    public void verifyColision() {
+        ArrayList<Projectile> arrows = player.getProjectiles();
+        for (Enemy enemy : enemies) {
+            if(player.getHitBox().overlaps(enemy.getHitBox()))
+                player.takeHit();
+            for (Projectile arrow : arrows) {
+                if(enemy.getHitBox().overlaps(arrow.getProjectile()))
+                    enemy.getHit();
+            }
+        }
+    }
+
     public Phase1(MedievalGame game, SpriteBatch batch, Player player) {
         this.medievalGame = game;
         gamecam = new OrthographicCamera();
@@ -80,7 +93,7 @@ public class Phase1 implements Screen {
         player.setLife(3);
 		music.play();
         enemies = new ArrayList<Enemy>();
-        enemies.add(new Bat(3, 600, 400, 1, 10, 5));
+        enemies.add(new Bat(3, 600, 65, 1, 10, 5));
     }
 
     @Override
@@ -92,21 +105,24 @@ public class Phase1 implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.GREEN);
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
         player.update(phasePhysicShapes, delta, batch);
         isGrounded();
+        verifyColision();
         for (Enemy enemy : enemies) {
-            enemy.update(delta);
+            enemy.update(delta, player);
+            shapeRenderer.rect(enemy.getHitBox().getX(), enemy.getHitBox().getY(), enemy.getHitBox().getWidth(), enemy.getHitBox().getHeight());
             if(enemy instanceof Bat) {
-                batch.draw(((Bat)enemy).getAnimation(), 600, 400);
+                batch.draw(((Bat)enemy).getAnimation(), enemy.getPositionX(), enemy.getPositionY());
             }
         }
+        System.out.println(enemies.get(0).getLife());
         batch.end();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.GREEN);
-        //shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
+        shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
         shapeRenderer.end();
     }
 

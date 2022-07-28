@@ -46,7 +46,7 @@ public class Player {
     private Animation fallAnimation;
     private Animation attackAnimation;
     private Animation rollAnimation;
-    private List<Projectile> projectiles; // Spawnados quando atira, somem no contato
+    private ArrayList<Projectile> projectiles; // Spawnados quando atira, somem no contato
 
     public float gravity; // forca da gravidade
 
@@ -110,6 +110,14 @@ public class Player {
 
     public int getLife() {
         return life;
+    }
+
+    public void takeHit () {
+        life--;
+    }
+
+    public ArrayList<Projectile> getProjectiles () {
+        return projectiles;
     }
 
     public float getPositionX() {

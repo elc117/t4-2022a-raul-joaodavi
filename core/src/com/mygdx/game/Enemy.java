@@ -9,6 +9,7 @@ public class Enemy {
     protected int strength;
     protected float moveSpeedX;
     protected float moveSpeedY;
+    protected boolean right;
     protected Rectangle hitBox;
 
 
@@ -38,6 +39,14 @@ public class Enemy {
         return strength;
     }
 
+    public Rectangle getHitBox () {
+        return hitBox;
+    }
+
+    public void getHit () {
+        life--;
+    }
+
     public void setPositionY(float positionY) {
         this.positionY = positionY;
     }
@@ -54,7 +63,7 @@ public class Enemy {
         this.strength = strength;
     }
 
-    public void update (float dt) {
-        
+    public void update (float dt, Player player) {
+
     }
 }
