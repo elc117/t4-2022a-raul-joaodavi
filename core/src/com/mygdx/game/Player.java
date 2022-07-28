@@ -30,6 +30,7 @@ public class Player {
     private boolean rolling; // player esta em rolamento
     private boolean shooted; // player atirou
     private boolean grounded; // player esta no chao
+    private boolean gotHited;
 
     private Rectangle hitBox; // fisica (corpo) do jogador
 

@@ -12,8 +12,6 @@ public class Hydra extends Enemy {
 
     public int action;
 
-    private Rectangle hitBox;
-
     public Hydra(int life, float positionX, float positionY, int strength, float moveSpeedX, float moveSpeedY, float bodyRadius) {
         super(life, positionX, positionY, strength, moveSpeedX, moveSpeedY);
         this.bodyRadius = bodyRadius;
@@ -21,9 +19,8 @@ public class Hydra extends Enemy {
         Texture texture = new Texture("Enemies/Hydra/tile000.png");
         animation1 = new Animation(new TextureRegion(texture), 8, 0.5f, true);
 
-        hitBox = new Rectangle(positionX, positionY, 55, 55);
-        this.positionX = positionX - 38;
-        this.positionY = positionY - 42;
+        hitBox = new Rectangle(positionX, positionY, 100, 100);
+
     }
 
     public void moveX() {
@@ -41,12 +38,20 @@ public class Hydra extends Enemy {
 
     }
 
+    private void hitBoxPosition () {
+        hitBox.x = positionX + 10;
+        hitBox.y =positionY + 100;
+    }
+
     public Animation getAnimation1() {
         return animation1;
     }
 
-    public void update(float delta)
+    public void update(float dt, Player player)
     {
-
+        super.update(dt, player);
+        animation1.update(dt);
+        hitBoxPosition();
+        moveX();
     }
 }
