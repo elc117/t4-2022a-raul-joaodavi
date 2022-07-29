@@ -46,11 +46,11 @@ public class Enemy {
     public void getHit (float arrowX) {
         life--;
         if(arrowX < hitBox.getX()) {
-            positionX += 20;
+            positionX += 50;
         } else {
-            positionX -= 20;
+            positionX -= 50;
         }
-        positionY += 20;
+        positionY += 30;
     }
 
     public void setPositionY(float positionY) {
