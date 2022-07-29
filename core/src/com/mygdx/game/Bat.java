@@ -17,9 +17,9 @@ public class Bat extends Enemy {
 
     private Animation flyAnimation;
 
-    public Bat(int life, float positionX, float positionY, int strength, float moveSpeedX, float moveSpeedY)
+    public Bat(int life, float positionX, float positionY, int strength)
     {   
-        super(life, positionX - 64, positionY - 60, strength, moveSpeedX, moveSpeedY);
+        super(life, positionX - 64, positionY - 60, strength, (float) Math.random() + 1, (float) Math.random() + 1);
         Texture texture = new Texture("Enemies/Bat/Fly.png");
         flyAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, true);
         right = true;

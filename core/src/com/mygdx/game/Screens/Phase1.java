@@ -16,6 +16,7 @@ import com.mygdx.game.Enemy;
 import com.mygdx.game.MedievalGame;
 import com.mygdx.game.Player;
 import com.mygdx.game.Projectile;
+import com.mygdx.game.Wolf;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.audio.Music;
@@ -95,7 +96,8 @@ public class Phase1 implements Screen {
             //shapeRenderer.rect(enemy.getHitBox().getX(), enemy.getHitBox().getY(), enemy.getHitBox().getWidth(), enemy.getHitBox().getHeight());
             if(enemy instanceof Bat) {
                 batch.draw(((Bat)enemy).getAnimation(), enemy.getPositionX(), enemy.getPositionY());
-            }
+            } else if (enemy instanceof Wolf)
+                batch.draw(((Wolf)enemy).getAnimation(), enemy.getPositionX(), enemy.getPositionY());
         }
         removeEnemies();
     }
@@ -118,8 +120,9 @@ public class Phase1 implements Screen {
 		music.play();
         enemies = new ArrayList<Enemy>();
         enemiesKilled = 0;
-        enemies.add(new Bat(3, 70, 500, 1, (float) Math.random() * (2 - 1 + 1) + 1, (float) Math.random() * (2 - 1 + 1) + 1));
-        enemies.add(new Bat(3, 500, 500, 1, (float) Math.random() * (2 - 1 + 1) + 1, (float) Math.random() * (2 - 1 + 1) + 1));
+        enemies.add(new Bat(3, 70, 500, 1));
+        enemies.add(new Bat(3, 500, 500, 1));
+        enemies.add(new Wolf(3, 450, 55, 1));
     }
 
     @Override
@@ -141,7 +144,7 @@ public class Phase1 implements Screen {
         verifyColision();
         drawEnemies(delta);
         batch.end();
-        //shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
+        shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
         shapeRenderer.end();
     }
 
