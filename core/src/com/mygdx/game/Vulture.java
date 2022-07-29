@@ -27,7 +27,11 @@ public class Vulture extends Enemy {
     }
 
     private void movement(Player player) {
-        if(player.getHitBox().x + player.getHitBox().width / 2 < hitBox.x) {
+        if (right && player.getHitBox().x > hitBox.x && player.getHitBox().x + player.getHitBox().width < hitBox.x + hitBox.width) 
+            positionX += 0;
+        else if (!right && player.getHitBox().x < hitBox.x && player.getHitBox().x + player.getHitBox().width > hitBox.x)
+            positionX += 0;
+        else if(player.getHitBox().x + player.getHitBox().width / 2 < hitBox.x) {
             positionX -= moveSpeedX;
             if(right) {
                 right = false;
