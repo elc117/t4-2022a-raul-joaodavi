@@ -15,6 +15,8 @@ public class Hydra extends Enemy {
     private Animation specialAttackAnimation;
     private Animation currentAnimation;
 
+    private boolean isPlayerLeft;
+
 
     public int action; // controla estado do boss
 
@@ -37,15 +39,29 @@ public class Hydra extends Enemy {
         isGoingUp = 1;
         hitBox = new Rectangle(positionX, positionY, 100, 100);
         currentAnimation = facingSideAnimation;
+        right = true;
     }
 
     public void move(Player player) {
         if (action == 0) // moving
         {
-            //if(player.getHitBox().x < hitBox.x)
-            //{
-              // currentAnimation.flip();
-            //}
+            if(player.getHitBox().x < hitBox.x)
+            {
+                isPlayerLeft = true;
+            } else {
+                isPlayerLeft = false;
+            }
+
+            if(isPlayerLeft && right)
+            {
+                currentAnimation.flip();
+                right = false;
+            } else if (!isPlayerLeft && !right)
+            {
+                currentAnimation.flip();
+                right = true;
+            }
+
             currentAnimation = facingSideAnimation;
             if(hitBox.x + hitBox.width > 750)
             {
@@ -123,7 +139,7 @@ public class Hydra extends Enemy {
         super.update(dt, player);
         currentAnimation.update(dt);
         hitBoxPosition();
-        if (Gdx.input.isKeyPressed(Input.Keys.L))
+        if (Gdx.input.isKeyJustPressed(Input.Keys.L))
         {
             if(action < 2)
                 action++;
