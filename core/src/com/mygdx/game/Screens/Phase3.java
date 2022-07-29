@@ -68,7 +68,7 @@ public class Phase3 implements Screen {
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
         forestBackGround = new Texture("Sceneries/Phase03.jpg");
         this.player = player;
-        this.hydra = new Hydra(1000, (float)(100), (float)(100), 20, 50, 25, 50);
+        this.hydra = new Hydra(1000, (float)(100), (float)(100), 20, 10, 5, 50);
         this.batch = batch;
         createPhysicShapes();
         shapeRenderer = new ShapeRenderer();
@@ -91,17 +91,16 @@ public class Phase3 implements Screen {
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
-        batch.draw(hydra.getAnimation1().getFrame(), hydra.getPositionX(), hydra.getPositionY());
+        batch.draw(hydra.getCurrentAnimation(), hydra.getPositionX(), hydra.getPositionY());
         player.update(phasePhysicShapes, delta, batch);
-        hydra.getAnimation1();
         hydra.update(delta, player);
         isGrounded();
         batch.end();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
-        shapeRenderer.rect(hydra.getHitBox().getX(), hydra.getHitBox().getY(), hydra.getHitBox().getWidth(), hydra.getHitBox().getHeight());
-        shapeRenderer.end();
+        //shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        //shapeRenderer.setColor(Color.GREEN);
+        //shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
+        //shapeRenderer.rect(hydra.getHitBox().getX(), hydra.getHitBox().getY(), hydra.getHitBox().getWidth(), hydra.getHitBox().getHeight());
+        //shapeRenderer.end();
     }
 
     @Override
