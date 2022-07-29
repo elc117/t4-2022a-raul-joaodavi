@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import java.math.*;
+import java.util.ArrayList;
 
 public class Hydra extends Enemy {
 
@@ -17,6 +18,10 @@ public class Hydra extends Enemy {
 
     private boolean isPlayerLeft;
 
+    private ArrayList<FlameBall> listOfBalls;
+
+    private boolean flameBallsIniciated;
+
 
     public int action; // controla estado do boss
 
@@ -26,6 +31,7 @@ public class Hydra extends Enemy {
     private int xAxeBiggerThenCenter;
     private int yAxeBiggerThenCenter;
     private boolean transitionStarted;
+
 
     public Hydra(int life, float positionX, float positionY, int strength, float moveSpeedX, float moveSpeedY, float bodyRadius) {
         super(life, positionX, positionY, strength, moveSpeedX, moveSpeedY);
@@ -40,6 +46,9 @@ public class Hydra extends Enemy {
         hitBox = new Rectangle(positionX, positionY, 100, 100);
         currentAnimation = facingSideAnimation;
         right = true;
+        listOfBalls = new ArrayList<FlameBall>();
+        flameBallsIniciated = false;
+
     }
 
     public void move(Player player) {
@@ -51,7 +60,6 @@ public class Hydra extends Enemy {
             } else {
                 isPlayerLeft = false;
             }
-
             if(isPlayerLeft && right)
             {
                 currentAnimation.flip();
@@ -86,6 +94,11 @@ public class Hydra extends Enemy {
         {
             currentAnimation = specialAttackAnimation;
             transitionToCenter();
+            if (!flameBallsIniciated)
+            {
+                iniciateFlameBalls();
+            }
+
         }
         else if (action == 2) // flame rain (statue if we find a decent sprite) 0u0
         {
@@ -94,6 +107,16 @@ public class Hydra extends Enemy {
         }
 
     }
+
+    private void iniciateFlameBalls()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            listOfBalls.add(new FlameBall(i * 800/10, 500));
+        }
+        flameBallsIniciated = true;
+    }
+
 
     private void transitionToCenter()
     {
@@ -147,5 +170,13 @@ public class Hydra extends Enemy {
                 action = 0;
         }
         move(player);
+    }
+
+    public ArrayList<FlameBall> getListOfBalls() {
+        return listOfBalls;
+    }
+
+    public int getAction() {
+        return action;
     }
 }

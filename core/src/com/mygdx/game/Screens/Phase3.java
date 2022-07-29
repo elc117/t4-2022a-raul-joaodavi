@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.FlameBall;
 import com.mygdx.game.MedievalGame;
 import com.mygdx.game.Hydra;
 import com.mygdx.game.Player;
@@ -35,6 +36,7 @@ public class Phase3 implements Screen {
     private ShapeRenderer shapeRenderer;
     ArrayList<Rectangle> phasePhysicShapes;
     Music music;
+
 
     private void createPhysicShapes() {
         phasePhysicShapes = new ArrayList<Rectangle>();
@@ -92,15 +94,23 @@ public class Phase3 implements Screen {
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
         batch.draw(hydra.getCurrentAnimation(), hydra.getPositionX(), hydra.getPositionY());
+        if(hydra.getAction() == 1)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                batch.draw(hydra.getListOfBalls().get(i).getAnimation(), hydra.getListOfBalls().get(i).getPositionX(), hydra.getListOfBalls().get(i).getPositionY());
+                hydra.getListOfBalls().get(i).update(delta);
+            }
+        }
         player.update(phasePhysicShapes, delta, batch);
         hydra.update(delta, player);
         isGrounded();
         batch.end();
-        //shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        //shapeRenderer.setColor(Color.GREEN);
-        //shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
-        //shapeRenderer.rect(hydra.getHitBox().getX(), hydra.getHitBox().getY(), hydra.getHitBox().getWidth(), hydra.getHitBox().getHeight());
-        //shapeRenderer.end();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
+        shapeRenderer.rect(hydra.getHitBox().getX(), hydra.getHitBox().getY(), hydra.getHitBox().getWidth(), hydra.getHitBox().getHeight());
+        shapeRenderer.end();
     }
 
     @Override
