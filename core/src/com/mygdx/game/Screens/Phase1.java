@@ -144,7 +144,7 @@ public class Phase1 implements Screen {
         verifyColision();
         drawEnemies(delta);
         batch.end();
-        shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
+        //shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
         shapeRenderer.end();
     }
 
@@ -173,5 +173,6 @@ public class Phase1 implements Screen {
     public void dispose() {
         music.dispose();
         shapeRenderer.dispose();
+        enemies.clear();
     }
 }
