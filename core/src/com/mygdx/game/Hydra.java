@@ -110,9 +110,9 @@ public class Hydra extends Enemy {
 
     private void iniciateFlameBalls()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 6; i++)
         {
-            listOfBalls.add(new FlameBall(i * 800/10, 500));
+            listOfBalls.add(new FlameBall(130 + i * 800/7, 500));
         }
         flameBallsIniciated = true;
     }

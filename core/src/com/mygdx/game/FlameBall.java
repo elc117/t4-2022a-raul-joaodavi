@@ -19,7 +19,7 @@ public class FlameBall {
         Texture texture = new Texture("FlameBall/flameball.png");
         animation= new Animation(new TextureRegion(texture), 4, 1f, true);
         active = true;
-        hitbox = new Rectangle(positionX, positionY, 16, 16);
+        hitbox = new Rectangle(positionX, positionY, 32, 32);
         this.positionX = positionX;
         this.positionY = positionY;
         isRight = true;
@@ -29,8 +29,8 @@ public class FlameBall {
     public void update(float delta)
     {
         animation.update(delta);
-        hitbox.x = positionX + 7;
-        hitbox.y = positionY + 2;
+        hitbox.x = positionX + 14;
+        hitbox.y = positionY + 10;
         move();
     }
 
@@ -41,10 +41,10 @@ public class FlameBall {
             positionY = 500;
             if(isRight)
             {
-                positionX -= 800/(10*2);
+                positionX -= 700/(4 * 2);
                 isRight = false;
             } else {
-                positionX += 800/(10*2);
+                positionX += 700/(4 * 2);
                 isRight = true;
             }
         } else {

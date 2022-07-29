@@ -96,7 +96,7 @@ public class Phase3 implements Screen {
         batch.draw(hydra.getCurrentAnimation(), hydra.getPositionX(), hydra.getPositionY());
         if(hydra.getAction() == 1)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 6; i++)
             {
                 batch.draw(hydra.getListOfBalls().get(i).getAnimation(), hydra.getListOfBalls().get(i).getPositionX(), hydra.getListOfBalls().get(i).getPositionY());
                 hydra.getListOfBalls().get(i).update(delta);
@@ -110,6 +110,13 @@ public class Phase3 implements Screen {
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
         shapeRenderer.rect(hydra.getHitBox().getX(), hydra.getHitBox().getY(), hydra.getHitBox().getWidth(), hydra.getHitBox().getHeight());
+        if (hydra.getAction() == 1)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                shapeRenderer.rect(hydra.getListOfBalls().get(i).getHitbox().getX(), hydra.getListOfBalls().get(i).getHitbox().getY(), hydra.getListOfBalls().get(i).getHitbox().getWidth(), hydra.getListOfBalls().get(i).getHitbox().getHeight());
+            }
+        }
         shapeRenderer.end();
     }
 
