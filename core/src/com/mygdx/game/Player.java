@@ -16,6 +16,8 @@ import java.util.*;
 public class Player {
     // ESTADO E CARACTERISTICAS DO PLAYER
     private int life;
+    private float invincibleTime;
+    private float currentInvincibleTime;
     private float positionX;
     private float positionY;
     private float moveSpeedX; // velocidade horizontal
@@ -81,6 +83,9 @@ public class Player {
         shooted = false;
         rolling = false;
         grounded = true;
+        gotHited = false;
+        invincibleTime = 1;
+        currentInvincibleTime = 0;
         rollSpeed = 10;
         projectiles = new ArrayList<Projectile>();
         shootSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/ShootSound.mp3"));
@@ -113,8 +118,24 @@ public class Player {
         return life;
     }
 
-    public void takeHit () {
-        life--;
+    public void takeHit (float enemyPosX) {
+        if (!gotHited && !rolling) {
+            gotHited = true;
+            currentInvincibleTime = 0;
+            if (enemyPosX < hitBox.x)
+                positionX += 50;
+            else 
+                positionX -= 50;
+            positionY += 30;
+            life--;
+        }
+    }
+
+    private void verifyInvencibility (float dt) {
+        if (gotHited && currentInvincibleTime < invincibleTime)
+            currentInvincibleTime += dt;
+        else if (gotHited)
+            gotHited = false;
     }
 
     public ArrayList<Projectile> getProjectiles () {
@@ -280,6 +301,7 @@ public class Player {
         attackAnimation.update(dt);
         rollAnimation.update(dt);
         fallAnimation.update(dt);
+        verifyInvencibility(dt);
         for (Projectile projectile : projectiles) {
             projectile.drawProjectile(batch, 50, 750);
         }

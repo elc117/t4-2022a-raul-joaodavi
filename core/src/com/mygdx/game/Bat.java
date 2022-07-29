@@ -27,7 +27,7 @@ public class Bat extends Enemy {
     }
 
     private void movement(Player player) {
-
+        
     }
 
     private void hitBoxPosition() {

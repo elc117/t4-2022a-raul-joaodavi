@@ -13,6 +13,7 @@ public class Projectile {
     private Rectangle projectile;
     private TextureRegion img;
     private Sound missedSound;
+    private Sound hitSound;
     private float speed;
     boolean right;
     boolean active;
@@ -28,6 +29,7 @@ public class Projectile {
         }
         active = true;
         missedSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/ArrowWallSound.mp3"));
+        hitSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/ArrowEnemySound.mp3"));
     }
 
     public Rectangle getProjectile () {
@@ -47,6 +49,11 @@ public class Projectile {
             projectile.x += speed;
         else 
             projectile.x -= speed;
+    }
+
+    public void hit () {
+        active = false;
+        hitSound.play(0.2f);
     }
 
     private void verify (float lim1, float lim2) {

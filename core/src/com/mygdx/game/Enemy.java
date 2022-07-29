@@ -43,8 +43,14 @@ public class Enemy {
         return hitBox;
     }
 
-    public void getHit () {
+    public void getHit (float arrowX) {
         life--;
+        if(arrowX < hitBox.getX()) {
+            positionX += 20;
+        } else {
+            positionX -= 20;
+        }
+        positionY += 20;
     }
 
     public void setPositionY(float positionY) {

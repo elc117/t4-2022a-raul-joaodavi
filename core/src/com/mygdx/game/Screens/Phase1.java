@@ -68,10 +68,12 @@ public class Phase1 implements Screen {
         ArrayList<Projectile> arrows = player.getProjectiles();
         for (Enemy enemy : enemies) {
             if(player.getHitBox().overlaps(enemy.getHitBox()))
-                player.takeHit();
+                player.takeHit(enemy.getHitBox().x);
             for (Projectile arrow : arrows) {
-                if(enemy.getHitBox().overlaps(arrow.getProjectile()))
-                    enemy.getHit();
+                if(enemy.getHitBox().overlaps(arrow.getProjectile())) {
+                    enemy.getHit(arrow.getProjectile().x);
+                    arrow.hit();
+                }
             }
         }
     }
@@ -94,6 +96,7 @@ public class Phase1 implements Screen {
 		music.play();
         enemies = new ArrayList<Enemy>();
         enemies.add(new Bat(3, 600, 65, 1, 10, 5));
+        enemies.add(new Bat(3, 600, 150, 1, 10, 5));
     }
 
     @Override
