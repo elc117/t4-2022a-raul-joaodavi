@@ -95,8 +95,8 @@ public class Phase1 implements Screen {
         player.setLife(3);
 		music.play();
         enemies = new ArrayList<Enemy>();
-        enemies.add(new Bat(3, 600, 65, 1, 10, 5));
-        enemies.add(new Bat(3, 600, 150, 1, 10, 5));
+        enemies.add(new Bat(3, 600, 65, 1, 2, 1));
+        //enemies.add(new Bat(3, 600, 150, 1, 3, 5));
     }
 
     @Override
@@ -118,14 +118,14 @@ public class Phase1 implements Screen {
         verifyColision();
         for (Enemy enemy : enemies) {
             enemy.update(delta, player);
-            shapeRenderer.rect(enemy.getHitBox().getX(), enemy.getHitBox().getY(), enemy.getHitBox().getWidth(), enemy.getHitBox().getHeight());
+            //shapeRenderer.rect(enemy.getHitBox().getX(), enemy.getHitBox().getY(), enemy.getHitBox().getWidth(), enemy.getHitBox().getHeight());
             if(enemy instanceof Bat) {
                 batch.draw(((Bat)enemy).getAnimation(), enemy.getPositionX(), enemy.getPositionY());
             }
         }
         System.out.println(enemies.get(0).getLife());
         batch.end();
-        shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
+        //shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
         shapeRenderer.end();
     }
 

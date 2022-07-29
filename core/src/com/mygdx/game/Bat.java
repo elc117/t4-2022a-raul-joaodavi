@@ -27,7 +27,24 @@ public class Bat extends Enemy {
     }
 
     private void movement(Player player) {
-        
+        if(player.getHitBox().x + player.getHitBox().width / 2 < hitBox.x) {
+            positionX -= moveSpeedX;
+            if(right) {
+                right = false;
+                flyAnimation.flip();
+            }
+        } else {
+            positionX += moveSpeedX;
+            if(!right) {
+                right = true;
+                flyAnimation.flip();
+            }
+        }
+        if(player.getHitBox().y + player.getHitBox().height / 2 < hitBox.y) {
+            positionY -= moveSpeedY;
+        } else {
+            positionY += moveSpeedY;
+        }
     }
 
     private void hitBoxPosition() {
