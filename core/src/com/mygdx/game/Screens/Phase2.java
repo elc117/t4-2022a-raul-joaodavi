@@ -28,7 +28,7 @@ import com.badlogic.gdx.Input;
 import java.util.ArrayList;
 
 public class Phase2 implements Screen {
-    Texture forestBackGround;
+    Texture desertBackGround;
     Texture woodPlatform1;
     SpriteBatch batch;
     private MedievalGame medievalGame;
@@ -111,7 +111,7 @@ public class Phase2 implements Screen {
         gamecam = new OrthographicCamera();
         gamecam.setToOrtho(false, 800, 600);
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
-        forestBackGround = new Texture("Sceneries/Phase02.jpg");
+        desertBackGround = new Texture("Sceneries/Phase02.jpg");
         this.player = player;
         this.batch = batch;
         createPhysicShapes();
@@ -140,6 +140,13 @@ public class Phase2 implements Screen {
         }
     }
 
+    private void nextlevel () {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            this.dispose();
+            medievalGame.setScreen(new Phase3(medievalGame, batch, player));
+        }
+    }
+
     @Override
     public void show() {
 
@@ -153,7 +160,7 @@ public class Phase2 implements Screen {
         shapeRenderer.setColor(Color.GREEN);
         spawnEnemies(delta);
         batch.begin();
-        batch.draw(forestBackGround, 0, 0);
+        batch.draw(desertBackGround, 0, 0);
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
         player.update(phasePhysicShapes, delta, batch);
         isGrounded();
@@ -162,6 +169,7 @@ public class Phase2 implements Screen {
         batch.end();
         //shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
         shapeRenderer.end();
+        nextlevel();
     }
 
     @Override

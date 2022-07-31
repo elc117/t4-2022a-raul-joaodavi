@@ -144,6 +144,13 @@ public class Phase1 implements Screen {
         spawned = false;
     }
 
+    private void nextlevel () {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            this.dispose();
+            medievalGame.setScreen(new Phase2(medievalGame, batch, player));
+        }
+    }
+
     @Override
     public void show() {
 
@@ -167,6 +174,7 @@ public class Phase1 implements Screen {
         // shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(),
         // player.getHitBox().getWidth(), player.getHitBox().getHeight());
         shapeRenderer.end();
+        nextlevel();
     }
 
     @Override

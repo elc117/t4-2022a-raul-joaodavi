@@ -13,6 +13,7 @@ public class MedievalGame extends Game {
 	// virtual height and width
 	public static final int V_WIDTH = 800;
 	public static final int V_HEIGHT = 600;
+	private MainMenu mainMenu;
 	private Phase1 phase1;
 	private Phase2 phase2;
 	private Phase3 phase3;
@@ -22,6 +23,10 @@ public class MedievalGame extends Game {
 
 	public Player player;
 
+	public Player getPlayer() {
+		return player;
+	}
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -29,33 +34,13 @@ public class MedievalGame extends Game {
 		// setting up screen of the game
 		currentPhase = 1;
 		changedPhase = false;
-		phase1 = new Phase1(this, batch, player);
-		setScreen(phase1);
+		mainMenu = new MainMenu(this, batch);
+		setScreen(mainMenu);
 	}
 
 	@Override
 	public void render () {
-		temporaryScreenChange();
 		super.render(); // delegates render method to whatever screen is occuring at the time
-	}
-
-	private void temporaryScreenChange () {
-		if(Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-			currentPhase++;
-			changedPhase = true;
-		} else {
-			changedPhase = false;
-		}
-		
-		if(currentPhase == 2 && changedPhase) {
-			phase1.dispose();
-			phase2 = new Phase2(this, batch, player);
-			setScreen(phase2);
-		} else if(currentPhase == 3 && changedPhase) {
-			phase2.dispose();
-			phase3 = new Phase3(this, batch, player);
-			setScreen(phase3);
-		}
 	}
 
 }
