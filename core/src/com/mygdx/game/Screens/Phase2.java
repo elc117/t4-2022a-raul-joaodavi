@@ -43,6 +43,8 @@ public class Phase2 implements Screen {
     private ArrayList<Enemy> enemies;
     ArrayList<Rectangle> phasePhysicShapes;
     Music music;
+    private float waitingTime;
+    private boolean spawned;
 
     private void createPhysicShapes() {
         phasePhysicShapes = new ArrayList<Rectangle>();
@@ -122,9 +124,20 @@ public class Phase2 implements Screen {
 		music.play();
         enemies = new ArrayList<Enemy>();
         enemiesKilled = 0;
-        enemies.add(new Vulture(3, 70, 500, 1));
-        enemies.add(new Vulture(3, 500, 500, 1));
-        enemies.add(new Hyena(3, 450, 55, 1));
+        waitingTime = 0;
+        spawned = false;
+    }
+
+    public void spawnEnemies(float delta) {
+        float totalWaitingTime = 5;
+        if (waitingTime < totalWaitingTime)
+            waitingTime += delta;
+        else if (!spawned) {
+            spawned = true;
+            enemies.add(new Vulture(3, 70, 500, 1));
+            enemies.add(new Vulture(3, 500, 500, 1));
+            enemies.add(new Hyena(3, 450, 55, 1));
+        }
     }
 
     @Override
@@ -138,6 +151,7 @@ public class Phase2 implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GREEN);
+        spawnEnemies(delta);
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
