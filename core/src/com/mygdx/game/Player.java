@@ -43,6 +43,7 @@ public class Player {
     private Sound jumpSound;
     private Sound shootSound;
     private Sound rollSound;
+    private Sound damageSound;
     private Animation runAnimation;
     private Animation idleAnimation;
     private Animation jumpAnimation;
@@ -92,6 +93,7 @@ public class Player {
         arrowTexture = new Texture("Projectiles/Arrow.png");
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/JumpSound.mp3"));
         rollSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/RollSound.mp3"));
+        damageSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/Damage.wav"));
     }
 
     // retorna animacao de acordo com o estado do jogador
@@ -135,6 +137,7 @@ public class Player {
                 positionX -= xMove;
             positionY += 30;
             life--;
+            damageSound.play(0.3f);
             enemy.hit(hitBox.x);
         }
     }

@@ -51,8 +51,6 @@ public class MainMenu implements Screen{
         batch.draw(backGround, 0, 0);
         verifyClicks();
         batch.end();
-        System.out.println("X " + Gdx.input.getX());
-        System.out.println("Y " + Gdx.input.getY());
     }
 
     private void verifyClicks() {
