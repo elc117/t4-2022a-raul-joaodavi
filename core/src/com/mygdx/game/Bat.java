@@ -27,7 +27,7 @@ public class Bat extends Enemy {
     }
 
     private void movement(Player player) {
-        if (right && player.getHitBox().x > hitBox.x && player.getHitBox().x + player.getHitBox().width < hitBox.x + hitBox.width) 
+        if (right && player.getHitBox().x > hitBox.x && player.getHitBox().x < hitBox.x + hitBox.width) 
             positionX += 0;
         else if (!right && player.getHitBox().x < hitBox.x && player.getHitBox().x + player.getHitBox().width > hitBox.x)
             positionX += 0;
