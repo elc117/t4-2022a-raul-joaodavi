@@ -75,7 +75,7 @@ public class Phase2 implements Screen {
         ArrayList<Projectile> arrows = player.getProjectiles();
         for (Enemy enemy : enemies) {
             if(player.getHitBox().overlaps(enemy.getHitBox()))
-                player.takeHit(enemy.getHitBox().x);
+                player.takeHit(enemy);
             for (Projectile arrow : arrows) {
                 if(enemy.getHitBox().overlaps(arrow.getProjectile())) {
                     enemy.getHit(arrow.getProjectile().x);
@@ -141,7 +141,7 @@ public class Phase2 implements Screen {
     }
 
     private void nextlevel () {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        if (enemiesKilled >= 3) {
             this.dispose();
             medievalGame.setScreen(new Phase3(medievalGame, batch, player));
         }

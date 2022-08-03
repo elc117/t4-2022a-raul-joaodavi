@@ -77,8 +77,8 @@ public class Phase1 implements Screen {
     public void verifyColision() {
         ArrayList<Projectile> arrows = player.getProjectiles();
         for (Enemy enemy : enemies) {
-            if (player.getHitBox().overlaps(enemy.getHitBox()))
-                player.takeHit(enemy.getHitBox().x);
+            if (player.getHitBox().overlaps(enemy.getHitBox())) 
+                player.takeHit(enemy);
             for (Projectile arrow : arrows) {
                 if (enemy.getHitBox().overlaps(arrow.getProjectile())) {
                     enemy.getHit(arrow.getProjectile().x);
@@ -145,7 +145,7 @@ public class Phase1 implements Screen {
     }
 
     private void nextlevel () {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        if (enemiesKilled >= 3) {
             this.dispose();
             medievalGame.setScreen(new Phase2(medievalGame, batch, player));
         }

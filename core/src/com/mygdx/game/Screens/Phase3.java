@@ -108,14 +108,12 @@ public class Phase3 implements Screen {
         batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
-        shapeRenderer.rect(hydra.getHitBox().getX(), hydra.getHitBox().getY(), hydra.getHitBox().getWidth(), hydra.getHitBox().getHeight());
+        //shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
+        //hapeRenderer.rect(hydra.getHitBox().getX(), hydra.getHitBox().getY(), hydra.getHitBox().getWidth(), hydra.getHitBox().getHeight());
         if (hydra.getAction() == 1)
         {
-            for (int i = 0; i < 6; i++)
-            {
-                shapeRenderer.rect(hydra.getListOfBalls().get(i).getHitbox().getX(), hydra.getListOfBalls().get(i).getHitbox().getY(), hydra.getListOfBalls().get(i).getHitbox().getWidth(), hydra.getListOfBalls().get(i).getHitbox().getHeight());
-            }
+            //for (int i = 0; i < 6; i++)
+                //shapeRenderer.rect(hydra.getListOfBalls().get(i).getHitbox().getX(), hydra.getListOfBalls().get(i).getHitbox().getY(), hydra.getListOfBalls().get(i).getHitbox().getWidth(), hydra.getListOfBalls().get(i).getHitbox().getHeight());
         }
         shapeRenderer.end();
     }

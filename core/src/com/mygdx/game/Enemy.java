@@ -53,6 +53,15 @@ public class Enemy {
         positionY += 30;
     }
 
+    public void hit (float playerX) {
+        if(playerX < hitBox.getX()) {
+            positionX += 50;
+        } else {
+            positionX -= 50;
+        }
+        positionY += 30;
+    }
+
     public void setPositionY(float positionY) {
         this.positionY = positionY;
     }
