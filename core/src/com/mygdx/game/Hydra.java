@@ -48,7 +48,7 @@ public class Hydra extends Enemy {
         right = true;
         listOfBalls = new ArrayList<FlameBall>();
         flameBallsIniciated = false;
-
+    life = 10;
     }
 
     public void move(Player player) {
@@ -171,6 +171,7 @@ public class Hydra extends Enemy {
         }
         move(player);
     }
+
 
     public ArrayList<FlameBall> getListOfBalls() {
         return listOfBalls;

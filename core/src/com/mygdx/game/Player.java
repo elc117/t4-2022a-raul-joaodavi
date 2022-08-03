@@ -142,6 +142,18 @@ public class Player {
         }
     }
 
+    public void takeHitNokb(float posX)
+    {
+
+        if (!gotHited && !rolling) {
+            gotHited = true;
+            currentInvincibleTime = 0;
+            positionY += 30;
+            life--;
+            damageSound.play(0.3f);
+        }
+    }
+
     private void verifyInvencibility (float dt) {
         if (gotHited && currentInvincibleTime < invincibleTime)
             currentInvincibleTime += dt;

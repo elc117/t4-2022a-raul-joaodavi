@@ -9,10 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.FlameBall;
-import com.mygdx.game.MedievalGame;
-import com.mygdx.game.Hydra;
-import com.mygdx.game.Player;
+import com.mygdx.game.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.audio.Music;
@@ -79,6 +76,7 @@ public class Phase3 implements Screen {
         music.setLooping(true);
         music.setVolume(0.3f);
         music.play();
+        player.setLife(3);
     }
 
     @Override
@@ -116,6 +114,7 @@ public class Phase3 implements Screen {
                 //shapeRenderer.rect(hydra.getListOfBalls().get(i).getHitbox().getX(), hydra.getListOfBalls().get(i).getHitbox().getY(), hydra.getListOfBalls().get(i).getHitbox().getWidth(), hydra.getListOfBalls().get(i).getHitbox().getHeight());
         }
         shapeRenderer.end();
+        verifyColision();
     }
 
     @Override
@@ -137,6 +136,24 @@ public class Phase3 implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    public void verifyColision() {
+        ArrayList<Projectile> arrows = player.getProjectiles();
+        if (player.getHitBox().overlaps(hydra.getHitBox()))
+            player.takeHit(hydra);
+        for (Projectile arrow : arrows) {
+            if (hydra.getHitBox().overlaps(arrow.getProjectile())) {
+                hydra.getHit(arrow.getProjectile().x);
+                arrow.hit();
+            }
+        }
+        for (FlameBall f: hydra.getListOfBalls()){
+            if (player.getHitBox().overlaps(f.getHitbox()))
+            {
+                player.takeHitNokb(f.getHitbox().x + f.getHitbox().width / 2);
+            }
+        }
     }
 
     @Override
