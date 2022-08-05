@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.*;
@@ -67,7 +68,7 @@ public class Phase3 implements Screen {
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
         forestBackGround = new Texture("Sceneries/Phase03.jpg");
         this.player = player;
-        this.hydra = new Hydra(1000, (float)(100), (float)(100), 20, 10, 5, 50);
+        this.hydra = new Hydra(3, (float)(100), (float)(100), 20, 10, 5, 50);
         this.batch = batch;
         createPhysicShapes();
         shapeRenderer = new ShapeRenderer();
@@ -91,28 +92,24 @@ public class Phase3 implements Screen {
         batch.begin();
         batch.draw(forestBackGround, 0, 0);
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
-        batch.draw(hydra.getCurrentAnimation(), hydra.getPositionX(), hydra.getPositionY());
-        if(hydra.getAction() == 1)
+        if (hydra.getLife() > 0)
         {
-            for (int i = 0; i < 6; i++)
+            batch.draw(hydra.getCurrentAnimation(), hydra.getPositionX(), hydra.getPositionY());
+            if(hydra.getAction() == 1)
             {
-                batch.draw(hydra.getListOfBalls().get(i).getAnimation(), hydra.getListOfBalls().get(i).getPositionX(), hydra.getListOfBalls().get(i).getPositionY());
-                hydra.getListOfBalls().get(i).update(delta);
+                for (int i = 0; i < 6; i++)
+                {
+                    batch.draw(hydra.getListOfBalls().get(i).getAnimation(), hydra.getListOfBalls().get(i).getPositionX(), hydra.getListOfBalls().get(i).getPositionY());
+                    hydra.getListOfBalls().get(i).update(delta);
+                }
             }
+            hydra.update(delta, player);
         }
         player.update(phasePhysicShapes, delta, batch);
-        hydra.update(delta, player);
         isGrounded();
         batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GREEN);
-        //shapeRenderer.rect(player.getHitBox().getX(), player.getHitBox().getY(), player.getHitBox().getWidth(), player.getHitBox().getHeight());
-        //hapeRenderer.rect(hydra.getHitBox().getX(), hydra.getHitBox().getY(), hydra.getHitBox().getWidth(), hydra.getHitBox().getHeight());
-        if (hydra.getAction() == 1)
-        {
-            //for (int i = 0; i < 6; i++)
-                //shapeRenderer.rect(hydra.getListOfBalls().get(i).getHitbox().getX(), hydra.getListOfBalls().get(i).getHitbox().getY(), hydra.getListOfBalls().get(i).getHitbox().getWidth(), hydra.getListOfBalls().get(i).getHitbox().getHeight());
-        }
         shapeRenderer.end();
         verifyColision();
     }
@@ -139,19 +136,22 @@ public class Phase3 implements Screen {
     }
 
     public void verifyColision() {
-        ArrayList<Projectile> arrows = player.getProjectiles();
-        if (player.getHitBox().overlaps(hydra.getHitBox()))
-            player.takeHit(hydra);
-        for (Projectile arrow : arrows) {
-            if (hydra.getHitBox().overlaps(arrow.getProjectile())) {
-                hydra.getHit(arrow.getProjectile().x);
-                arrow.hit();
+        if (hydra.getLife() > 0)
+        {
+            ArrayList<Projectile> arrows = player.getProjectiles();
+            if (player.getHitBox().overlaps(hydra.getHitBox()))
+                player.takeHit(hydra);
+            for (Projectile arrow : arrows) {
+                if (hydra.getHitBox().overlaps(arrow.getProjectile())) {
+                    hydra.getHit(arrow.getProjectile().x);
+                    arrow.hit();
+                }
             }
-        }
-        for (FlameBall f: hydra.getListOfBalls()){
-            if (player.getHitBox().overlaps(f.getHitbox()))
-            {
-                player.takeHitNokb(f.getHitbox().x + f.getHitbox().width / 2);
+            for (FlameBall f: hydra.getListOfBalls()){
+                if (player.getHitBox().overlaps(f.getHitbox()))
+                {
+                    player.takeHitNokb(f.getHitbox().x + f.getHitbox().width / 2);
+                }
             }
         }
     }

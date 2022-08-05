@@ -173,6 +173,7 @@ public class Hydra extends Enemy {
     }
 
 
+
     public ArrayList<FlameBall> getListOfBalls() {
         return listOfBalls;
     }
