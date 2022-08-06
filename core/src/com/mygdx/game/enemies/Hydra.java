@@ -92,7 +92,7 @@ public class Hydra extends Enemy {
             positionY = positionY + moveSpeedY * isGoingUp;
 
 
-        } else if (action == 1) // tentacles
+        } else if (action == 1) // flame ball
         {
             currentAnimation = specialAttackAnimation;
             transitionToCenter();
@@ -101,11 +101,6 @@ public class Hydra extends Enemy {
                 iniciateFlameBalls();
             }
 
-        }
-        else if (action == 2) // flame rain (statue if we find a decent sprite) 0u0
-        {
-            currentAnimation = specialAttackAnimation;
-            transitionToCenter();
         }
 
     }
@@ -164,14 +159,13 @@ public class Hydra extends Enemy {
         super.update(dt, player);
         currentAnimation.update(dt);
         hitBoxPosition();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.L))
-        {
-            if(action < 2)
-                action++;
-            else
-                action = 0;
-        }
+        action = (life + 1) % 2;
         move(player);
+    }
+
+    @Override
+    public void hit (float playerX) {
+
     }
 
 
