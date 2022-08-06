@@ -35,7 +35,7 @@ public class Phase2 extends Phase {
         music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music02.mp3"));
         music.setLooping(true);
         music.setVolume(0.3f);
-        player.setLife(3);
+        player.setDefault();
         music.play();
         enemies = new ArrayList<Enemy>();
         enemiesKilled = 0;
@@ -50,15 +50,15 @@ public class Phase2 extends Phase {
             player.setGrounded(true);
         else if (Gdx.input.isKeyPressed(Input.Keys.S))
             player.setGrounded(false);
-        else if (player.getHitBox().x > 70 && player.getHitBox().x < 170 && player.getHitBox().y >= 165 && player.getHitBox().y <= 175)
+        else if (player.getHitBox().x > 170 && player.getHitBox().x < 340 && player.getHitBox().y >= 165 && player.getHitBox().y <= 175)
             player.setGrounded(true);
-        else if (player.getHitBox().x > 320 && player.getHitBox().x < 420 && player.getHitBox().y >= 250 && player.getHitBox().y <= 260)
+        else if (player.getHitBox().x > 70 && player.getHitBox().x < 240 && player.getHitBox().y >= 290 && player.getHitBox().y <= 300)
             player.setGrounded(true);
-        else if (player.getHitBox().x > 70 && player.getHitBox().x < 170 && player.getHitBox().y >= 360 && player.getHitBox().y <= 370)
+        else if (player.getHitBox().x > 520 && player.getHitBox().x < 690 && player.getHitBox().y >= 290 && player.getHitBox().y <= 300)
             player.setGrounded(true);
-        else if (player.getHitBox().x > 570 && player.getHitBox().x < 670 && player.getHitBox().y >= 165 && player.getHitBox().y <= 175)
+        else if (player.getHitBox().x > 420 && player.getHitBox().x < 590 && player.getHitBox().y >= 165 && player.getHitBox().y <= 175)
             player.setGrounded(true);
-        else if (player.getHitBox().x > 570 && player.getHitBox().x < 670 && player.getHitBox().y >= 360 && player.getHitBox().y <= 370)
+        else if (player.getHitBox().x > 290 && player.getHitBox().x < 465 && player.getHitBox().y >= 420 && player.getHitBox().y <= 430)
             player.setGrounded(true);
         else
             player.setGrounded(false);
@@ -92,7 +92,7 @@ public class Phase2 extends Phase {
 
     // changing level
     private void nextlevel () {
-        if (enemiesKilled >= 3) {
+        if (enemiesKilled >= 3 || Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             this.dispose();
             medievalGame.setScreen(new Phase3(medievalGame, batch, player));
         }

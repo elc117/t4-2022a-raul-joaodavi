@@ -73,8 +73,8 @@ public class Player {
         attackAnimation = new Animation(new TextureRegion(texture), 7, 0.5f, true);
         texture = new Texture("Character/Archer/SpriteSheets/Rolling.png");
         rollAnimation = new Animation(new TextureRegion(texture), 7, 0.5f, true);
-        hitBox = new Rectangle(positionX, positionY, 55, 55);
-        this.positionX = positionX - 38;
+        hitBox = new Rectangle(positionX, positionY, 42, 55);
+        this.positionX = positionX - 45;
         this.positionY = positionY - 42;
         this.moveSpeedX = moveSpeedX;
         this.jumpSpeed = jumpSpeed;
@@ -143,6 +143,12 @@ public class Player {
             damageSound.play(0.3f);
             enemy.hit(hitBox.x);
         }
+    }
+
+    public void setDefault() {
+        life = 3;
+        positionX = 10;
+        positionY = 13;
     }
 
     // hitted by hydra (phase 3 boss)
@@ -306,7 +312,7 @@ public class Player {
 
     // players hitbox position update
     private void hitBoxPosition(ArrayList<Rectangle> objects) {
-        hitBox.x = positionX + 38;
+        hitBox.x = positionX + 45;
         hitBox.y = positionY + 42;
     }
 

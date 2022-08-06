@@ -36,7 +36,7 @@ public class Phase3 extends Phase{
         music.setLooping(true);
         music.setVolume(0.3f);
         music.play();
-        player.setLife(3);
+        player.setDefault();
     }
 
     // game platforms physics
@@ -46,15 +46,17 @@ public class Phase3 extends Phase{
             player.setGrounded(true);
         else if (Gdx.input.isKeyPressed(Input.Keys.S))
             player.setGrounded(false);
-        else if (player.getHitBox().x > 70 && player.getHitBox().x < 170 && player.getHitBox().y >= 165 && player.getHitBox().y <= 175)
+        else if (player.getHitBox().x > 220 && player.getHitBox().x < 340 && player.getHitBox().y >= 165 && player.getHitBox().y <= 175)
             player.setGrounded(true);
-        else if (player.getHitBox().x > 320 && player.getHitBox().x < 420 && player.getHitBox().y >= 250 && player.getHitBox().y <= 260)
+        else if (player.getHitBox().x > 120 && player.getHitBox().x < 215 && player.getHitBox().y >= 290 && player.getHitBox().y <= 300)
             player.setGrounded(true);
-        else if (player.getHitBox().x > 70 && player.getHitBox().x < 170 && player.getHitBox().y >= 360 && player.getHitBox().y <= 370)
+        else if (player.getHitBox().x > 545 && player.getHitBox().x < 640 && player.getHitBox().y >= 290 && player.getHitBox().y <= 300)
             player.setGrounded(true);
-        else if (player.getHitBox().x > 570 && player.getHitBox().x < 670 && player.getHitBox().y >= 165 && player.getHitBox().y <= 175)
+        else if (player.getHitBox().x > 420 && player.getHitBox().x < 540 && player.getHitBox().y >= 165 && player.getHitBox().y <= 175)
             player.setGrounded(true);
-        else if (player.getHitBox().x > 570 && player.getHitBox().x < 670 && player.getHitBox().y >= 360 && player.getHitBox().y <= 370)
+        else if (player.getHitBox().x > 220 && player.getHitBox().x < 340 && player.getHitBox().y >= 410 && player.getHitBox().y <= 420)
+            player.setGrounded(true);
+        else if (player.getHitBox().x > 420 && player.getHitBox().x < 540 && player.getHitBox().y >= 410 && player.getHitBox().y <= 420)
             player.setGrounded(true);
         else
             player.setGrounded(false);
