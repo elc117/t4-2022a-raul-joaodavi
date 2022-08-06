@@ -276,7 +276,7 @@ public class Player {
     // gravity system's function
     public void gravityEffect(ArrayList<Rectangle> objects) {
         float newPositionY = positionY - gravity * timeInAir;
-        if (hitBox.y > 55 && !jumping && !grounded) {
+        if (hitBox.y > 55 && (!jumping || dead) && !grounded) {
             positionY = newPositionY;
             timeInAir += 0.1;
         } else {
