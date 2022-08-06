@@ -1,27 +1,20 @@
-package com.mygdx.game;
+package com.mygdx.game.enemies;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ai.btree.decorator.Repeat;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Projectile;
+import com.mygdx.game.animations.Animation;
+import com.mygdx.game.player.Player;
 
-import java.util.*;
-
-public class Hyena extends Enemy {
+public class Wolf extends Enemy {
 
     private Animation runAnimation;
     private float timeInAir;
 
-    public Hyena(int life, float positionX, float positionY, int strength)
+    public Wolf(int life, float positionX, float positionY, int strength)
     {   
         super(life, positionX - 20, positionY - 10, strength,  (float) Math.random() + 3, 0);
-        Texture texture = new Texture("Enemies/Hyena/Run.png");
+        Texture texture = new Texture("Enemies/Wolf/Run.png");
         runAnimation = new Animation(new TextureRegion(texture), 6, 0.5f, true);
         right = false;
         hitBox = new Rectangle(positionX, positionY, 70, 35);

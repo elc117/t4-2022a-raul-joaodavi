@@ -1,8 +1,9 @@
-package com.mygdx.game;
+package com.mygdx.game.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.animations.Animation;
 
 public class FlameBall {
     public Animation animation;

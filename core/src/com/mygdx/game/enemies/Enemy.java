@@ -1,6 +1,7 @@
-package com.mygdx.game;
+package com.mygdx.game.enemies;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.player.Player;
 
 public class Enemy {
     protected int life;

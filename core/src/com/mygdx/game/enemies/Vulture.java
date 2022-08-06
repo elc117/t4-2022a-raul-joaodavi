@@ -1,17 +1,10 @@
-package com.mygdx.game;
+package com.mygdx.game.enemies;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ai.btree.decorator.Repeat;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Projectile;
-
-import java.util.*;
+import com.mygdx.game.animations.Animation;
+import com.mygdx.game.player.Player;
 
 public class Vulture extends Enemy {
 

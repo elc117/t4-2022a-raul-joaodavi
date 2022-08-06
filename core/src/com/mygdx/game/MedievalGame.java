@@ -1,13 +1,12 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.Input;
 import com.mygdx.game.Screens.Phase1;
 import com.mygdx.game.Screens.Phase2;
 import com.mygdx.game.Screens.Phase3;
+import com.mygdx.game.midGameUI.MainMenu;
+import com.mygdx.game.player.Player;
 
 public class MedievalGame extends Game {
 	// virtual height and width

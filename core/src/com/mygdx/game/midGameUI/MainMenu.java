@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.midGameUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.MedievalGame;
 import com.mygdx.game.Screens.Phase1;
 
 public class MainMenu implements Screen{

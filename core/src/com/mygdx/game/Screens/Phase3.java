@@ -1,47 +1,26 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.enemies.FlameBall;
+import com.mygdx.game.enemies.Hydra;
+import com.mygdx.game.player.Player;
+import com.mygdx.game.player.Projectile;
 
 import java.util.ArrayList;
 
-public class Phase3 implements Screen {
-    Texture forestBackGround;
-    Texture woodPlatform1;
-    SpriteBatch batch;
-    private MedievalGame medievalGame;
-    Texture texture;
-    // selects what the view port actually displays
-    private OrthographicCamera gamecam;
-    // how the game fits the devices display
-    private Viewport gamePort;
-    Player player;
-
+public class Phase3 extends Phase{
     Hydra hydra;
-    private ShapeRenderer shapeRenderer;
     ArrayList<Rectangle> phasePhysicShapes;
-    Music music;
 
-
-    private void createPhysicShapes() {
-        phasePhysicShapes = new ArrayList<Rectangle>();
-        // ground
-        phasePhysicShapes.add(new Rectangle(0, 0, MedievalGame.V_WIDTH, (float) MedievalGame.V_HEIGHT / 4));
-    }
-
+    @Override
     public void isGrounded() {
         if (player.getHitBox().y <= 55)
             player.setGrounded(true);
@@ -66,11 +45,10 @@ public class Phase3 implements Screen {
         gamecam = new OrthographicCamera();
         gamecam.setToOrtho(false, 800, 600);
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
-        forestBackGround = new Texture("Sceneries/Phase03.jpg");
+        background = new Texture("Sceneries/Phase03.jpg");
         this.player = player;
         this.hydra = new Hydra(3, (float)(100), (float)(100), 20, 10, 5, 50);
         this.batch = batch;
-        createPhysicShapes();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music03.mp3"));
@@ -81,17 +59,8 @@ public class Phase3 implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(forestBackGround, 0, 0);
-        batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
+        super.render(delta);
         if (hydra.getLife() > 0)
         {
             batch.draw(hydra.getCurrentAnimation(), hydra.getPositionX(), hydra.getPositionY());
@@ -106,35 +75,10 @@ public class Phase3 implements Screen {
             hydra.update(delta, player);
         }
         player.update(phasePhysicShapes, delta, batch);
-        isGrounded();
         batch.end();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.end();
-        verifyColision();
     }
 
     @Override
-    public void resize(int width, int height) {
-        // ajusting viewsoport to devices screen size
-        gamePort.update(width, height);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
     public void verifyColision() {
         if (hydra.getLife() > 0)
         {

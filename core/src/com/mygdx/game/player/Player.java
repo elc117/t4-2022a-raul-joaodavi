@@ -1,15 +1,14 @@
-package com.mygdx.game;
+package com.mygdx.game.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ai.btree.decorator.Repeat;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Projectile;
+import com.mygdx.game.animations.Animation;
+import com.mygdx.game.enemies.Enemy;
 
 import java.util.*;
 
@@ -337,8 +336,6 @@ public class Player {
         gravityEffect(objects);
         hitBoxPosition(objects);
         isRunning(objects);
-        // System.out.println(hitBox.x);
-        // System.out.println(hitBox.y);
     }
 
 }
