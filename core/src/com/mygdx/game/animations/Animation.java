@@ -12,6 +12,7 @@ public class Animation {
     private boolean repeat;
     private boolean firstExe;
 
+    // constructor
     public Animation(TextureRegion region, int frameCount, float cycleTime, boolean repeat){
         frames = new Array<TextureRegion>();
         TextureRegion temp;
@@ -27,6 +28,7 @@ public class Animation {
         firstExe = true;
     }
 
+    // render
     public void update(float dt){
         if(firstExe) {
             currentFrameTime += dt;
@@ -41,6 +43,7 @@ public class Animation {
         }
     }
 
+    // fliping sprite to wherever the object is facing
     public void flip(){
         for(TextureRegion region : frames)
             region.flip(true, false);

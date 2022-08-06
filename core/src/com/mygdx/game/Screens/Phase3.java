@@ -20,6 +20,26 @@ public class Phase3 extends Phase{
     Hydra hydra;
     ArrayList<Rectangle> phasePhysicShapes;
 
+    // constructor
+    public Phase3(MedievalGame game, SpriteBatch batch, Player player) {
+        this.medievalGame = game;
+        gamecam = new OrthographicCamera();
+        gamecam.setToOrtho(false, 800, 600);
+        gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
+        background = new Texture("Sceneries/Phase03.jpg");
+        this.player = player;
+        this.hydra = new Hydra(3, (float)(100), (float)(100), 20, 10, 5, 50);
+        this.batch = batch;
+        shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setAutoShapeType(true);
+        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music03.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.3f);
+        music.play();
+        player.setLife(3);
+    }
+
+    // game platforms physics
     @Override
     public void isGrounded() {
         if (player.getHitBox().y <= 55)
@@ -40,24 +60,7 @@ public class Phase3 extends Phase{
             player.setGrounded(false);
     }
 
-    public Phase3(MedievalGame game, SpriteBatch batch, Player player) {
-        this.medievalGame = game;
-        gamecam = new OrthographicCamera();
-        gamecam.setToOrtho(false, 800, 600);
-        gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
-        background = new Texture("Sceneries/Phase03.jpg");
-        this.player = player;
-        this.hydra = new Hydra(3, (float)(100), (float)(100), 20, 10, 5, 50);
-        this.batch = batch;
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setAutoShapeType(true);
-        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music03.mp3"));
-        music.setLooping(true);
-        music.setVolume(0.3f);
-        music.play();
-        player.setLife(3);
-    }
-
+    // render
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -78,6 +81,7 @@ public class Phase3 extends Phase{
         batch.end();
     }
 
+    // game hit and damage system
     @Override
     public void verifyColision() {
         if (hydra.getLife() > 0)
@@ -100,6 +104,7 @@ public class Phase3 extends Phase{
         }
     }
 
+    // dispose
     @Override
     public void dispose() {
         music.dispose();

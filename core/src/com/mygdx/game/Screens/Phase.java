@@ -31,6 +31,7 @@ public abstract class Phase implements Screen {
     protected int enemiesKilled;
     protected Music music;
 
+    // game player and enemies attack colision sistem
     public void verifyColision() {
         ArrayList<Projectile> arrows = player.getProjectiles();
         for (Enemy enemy : enemies) {
@@ -45,6 +46,7 @@ public abstract class Phase implements Screen {
         }
     }
 
+    // killing enemies
     protected void removeEnemies() {
         for (int i = 0; i < enemies.size(); i++) {
             if (enemies.get(i).getLife() <= 0) {
@@ -59,6 +61,7 @@ public abstract class Phase implements Screen {
 
     }
 
+    // render
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -70,9 +73,9 @@ public abstract class Phase implements Screen {
         verifyColision();
     }
 
+    // ajusts screen to window size
     @Override
     public void resize(int width, int height) {
-        // ajusting viewsoport to devices screen size
         gamePort.update(width, height);
     }
     public void isGrounded(){

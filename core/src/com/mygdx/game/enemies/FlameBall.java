@@ -10,12 +10,14 @@ public class FlameBall {
 
     private int positionX;
     private int positionY;
+    // hitbox
     private Rectangle hitbox;
     boolean active;
-
+    // horizontal speed
     private int dropSpeed;
-
     private boolean isRight;
+
+    //constructor
     public FlameBall(int positionX, int positionY){
         Texture texture = new Texture("FlameBall/flameball.png");
         animation= new Animation(new TextureRegion(texture), 4, 1f, true);
@@ -27,6 +29,7 @@ public class FlameBall {
         dropSpeed = 4;
     }
 
+    // render
     public void update(float delta)
     {
         animation.update(delta);
@@ -35,6 +38,7 @@ public class FlameBall {
         move();
     }
 
+    // movement and horizontal position setting
     public void move()
     {
         if(positionY < 50)

@@ -11,6 +11,7 @@ public class Wolf extends Enemy {
     private Animation runAnimation;
     private float timeInAir;
 
+    // constructor
     public Wolf(int life, float positionX, float positionY, int strength)
     {   
         super(life, positionX - 20, positionY - 10, strength,  (float) Math.random() + 3, 0);
@@ -20,6 +21,7 @@ public class Wolf extends Enemy {
         hitBox = new Rectangle(positionX, positionY, 70, 35);
     }
 
+    // movement
     private void movement(Player player) {
         if (right && player.getHitBox().x > hitBox.x && player.getHitBox().x < hitBox.x + hitBox.width) 
             positionX += 0;
@@ -40,6 +42,7 @@ public class Wolf extends Enemy {
         }
     }
 
+    // gravity system
     public void gravityEffect() {
         float newPositionY = positionY - 2 * timeInAir;
         if (hitBox.y > 55) {
@@ -50,6 +53,7 @@ public class Wolf extends Enemy {
         }
     }
 
+    // hitbox update
     private void hitBoxPosition() {
         hitBox.x = positionX + 20;
         hitBox.y = positionY + 10;
@@ -59,6 +63,7 @@ public class Wolf extends Enemy {
         return runAnimation.getFrame();
     }
 
+    // render
     public void update(float dt, Player player) {
         super.update(dt, player);
         runAnimation.update(dt);

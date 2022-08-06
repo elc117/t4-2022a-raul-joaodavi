@@ -18,8 +18,10 @@ public class Hydra extends Enemy {
     private Animation specialAttackAnimation;
     private Animation currentAnimation;
 
+    // constrols where hydra is looking at
     private boolean isPlayerLeft;
 
+    // flamebols in special attack
     private ArrayList<FlameBall> listOfBalls;
 
     private boolean flameBallsIniciated;
@@ -30,11 +32,12 @@ public class Hydra extends Enemy {
     private int isFacingRight; // controla movimento e animação horizontal
     private int isGoingUp; // controla movimento horizontal
 
+    // bools and ints used to control special attack
     private int xAxeBiggerThenCenter;
     private int yAxeBiggerThenCenter;
     private boolean transitionStarted;
 
-
+    // constructor
     public Hydra(int life, float positionX, float positionY, int strength, float moveSpeedX, float moveSpeedY, float bodyRadius) {
         super(life, positionX, positionY, strength, moveSpeedX, moveSpeedY);
         this.bodyRadius = bodyRadius;
@@ -50,9 +53,10 @@ public class Hydra extends Enemy {
         right = true;
         listOfBalls = new ArrayList<FlameBall>();
         flameBallsIniciated = false;
-    life = 10;
+        life = 10;
     }
 
+    // moving around
     public void move(Player player) {
         if (action == 0) // moving
         {
@@ -105,6 +109,7 @@ public class Hydra extends Enemy {
 
     }
 
+    // spawn flame balls
     private void iniciateFlameBalls()
     {
         for (int i = 0; i < 6; i++)
@@ -115,6 +120,7 @@ public class Hydra extends Enemy {
     }
 
 
+    // transiting to center screen when special attack initiates
     private void transitionToCenter()
     {
         if (!transitionStarted)
@@ -145,6 +151,7 @@ public class Hydra extends Enemy {
         }
     }
 
+    // updates hitbox to match with where the sprite is at
     private void hitBoxPosition () {
         hitBox.x = positionX + 35;
         hitBox.y = positionY + 120;
@@ -154,6 +161,7 @@ public class Hydra extends Enemy {
         return currentAnimation.getFrame();
     }
 
+    // render
     public void update(float dt, Player player)
     {
         super.update(dt, player);

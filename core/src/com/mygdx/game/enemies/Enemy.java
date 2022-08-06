@@ -44,6 +44,7 @@ public class Enemy {
         return hitBox;
     }
 
+    // gets damaged by player
     public void getHit (float arrowX) {
         life--;
         if(arrowX < hitBox.getX()) {
@@ -54,6 +55,7 @@ public class Enemy {
         positionY += 30;
     }
 
+    // damages player
     public void hit (float playerX) {
         if(playerX < hitBox.getX()) {
             positionX += 50;

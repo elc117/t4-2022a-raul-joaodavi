@@ -10,6 +10,7 @@ public class Bat extends Enemy {
 
     private Animation flyAnimation;
 
+    // constructor
     public Bat(int life, float positionX, float positionY, int strength)
     {   
         super(life, positionX - 64, positionY - 60, strength, (float) Math.random() + 1, (float) Math.random() + 1);
@@ -19,6 +20,7 @@ public class Bat extends Enemy {
         hitBox = new Rectangle(positionX, positionY, 27, 27);
     }
 
+    // flying towards the player
     private void movement(Player player) {
         if (right && player.getHitBox().x > hitBox.x && player.getHitBox().x < hitBox.x + hitBox.width) 
             positionX += 0;
@@ -44,6 +46,7 @@ public class Bat extends Enemy {
         }
     }
 
+    // hitbox update
     private void hitBoxPosition() {
         hitBox.x = positionX + 64;
         hitBox.y = positionY + 60;
@@ -53,6 +56,7 @@ public class Bat extends Enemy {
         return flyAnimation.getFrame();
     }
 
+    // render
     public void update(float dt, Player player) {
         super.update(dt, player);
         flyAnimation.update(dt);

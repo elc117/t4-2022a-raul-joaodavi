@@ -21,6 +21,29 @@ public class Phase2 extends Phase {
     private float waitingTime;
     private boolean spawned;
 
+    // constructor
+    public Phase2(MedievalGame game, SpriteBatch batch, Player player) {
+        this.medievalGame = game;
+        gamecam = new OrthographicCamera();
+        gamecam.setToOrtho(false, 800, 600);
+        gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
+        background = new Texture("Sceneries/Phase02.jpg");
+        this.player = player;
+        this.batch = batch;
+        shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setAutoShapeType(true);
+        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music02.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.3f);
+        player.setLife(3);
+        music.play();
+        enemies = new ArrayList<Enemy>();
+        enemiesKilled = 0;
+        waitingTime = 0;
+        spawned = false;
+    }
+
+    // game platforms collision physics
     @Override
     public void isGrounded() {
         if (player.getHitBox().y <= 55)
@@ -41,7 +64,7 @@ public class Phase2 extends Phase {
             player.setGrounded(false);
     }
 
-
+    // rendering enemies
     public void drawEnemies (float delta) {
         for (Enemy enemy : enemies) {
             enemy.update(delta, player);
@@ -54,27 +77,7 @@ public class Phase2 extends Phase {
         removeEnemies();
     }
 
-    public Phase2(MedievalGame game, SpriteBatch batch, Player player) {
-        this.medievalGame = game;
-        gamecam = new OrthographicCamera();
-        gamecam.setToOrtho(false, 800, 600);
-        gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
-        background = new Texture("Sceneries/Phase02.jpg");
-        this.player = player;
-        this.batch = batch;
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setAutoShapeType(true);
-        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music02.mp3"));
-		music.setLooping(true);
-        music.setVolume(0.3f);
-        player.setLife(3);
-		music.play();
-        enemies = new ArrayList<Enemy>();
-        enemiesKilled = 0;
-        waitingTime = 0;
-        spawned = false;
-    }
-
+    // creating and spawning enemies on phase
     public void spawnEnemies(float delta) {
         float totalWaitingTime = 5;
         if (waitingTime < totalWaitingTime)
@@ -87,6 +90,7 @@ public class Phase2 extends Phase {
         }
     }
 
+    // changing level
     private void nextlevel () {
         if (enemiesKilled >= 3) {
             this.dispose();
@@ -94,6 +98,7 @@ public class Phase2 extends Phase {
         }
     }
 
+    // render
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -106,6 +111,7 @@ public class Phase2 extends Phase {
         nextlevel();
     }
 
+    // dispose
     @Override
     public void dispose() {
         music.dispose();

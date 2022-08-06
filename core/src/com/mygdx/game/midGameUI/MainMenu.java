@@ -26,6 +26,7 @@ public class MainMenu implements Screen{
     private Texture exitButtonIdle;
     private Texture exitButtonSelected;
 
+    // constructor
     public MainMenu(MedievalGame medievalGame, SpriteBatch batch) {
         this.medievalGame = medievalGame;
         this.batch = batch;
@@ -44,6 +45,7 @@ public class MainMenu implements Screen{
         
     }
 
+    // render
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -54,6 +56,7 @@ public class MainMenu implements Screen{
         batch.end();
     }
 
+    // button system
     private void verifyClicks() {
         if (Gdx.input.getX() > 340 && Gdx.input.getX() < 340 + playButtonIdle.getWidth() && Gdx.input.getY() < 420 && Gdx.input.getY() > 418 - playButtonIdle.getHeight()) {
             batch.draw(playButtonSelected, 340, 180);

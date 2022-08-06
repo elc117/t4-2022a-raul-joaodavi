@@ -10,6 +10,7 @@ public class Vulture extends Enemy {
 
     private Animation flyAnimation;
 
+    // constructor
     public Vulture(int life, float positionX, float positionY, int strength)
     {   
         super(life, positionX - 10, positionY - 10, strength, (float) Math.random() + 1, (float) Math.random() + 1);
@@ -19,6 +20,7 @@ public class Vulture extends Enemy {
         hitBox = new Rectangle(positionX, positionY, 54, 27);
     }
 
+    // flying towards player
     private void movement(Player player) {
         if (right && player.getHitBox().x > hitBox.x && player.getHitBox().x < hitBox.x + hitBox.width) 
             positionX += 0;
@@ -44,6 +46,7 @@ public class Vulture extends Enemy {
         }
     }
 
+    // hitbox update
     private void hitBoxPosition() {
         hitBox.x = positionX + 10;
         hitBox.y = positionY + 10;
@@ -53,6 +56,7 @@ public class Vulture extends Enemy {
         return flyAnimation.getFrame();
     }
 
+    // render
     public void update(float dt, Player player) {
         super.update(dt, player);
         flyAnimation.update(dt);

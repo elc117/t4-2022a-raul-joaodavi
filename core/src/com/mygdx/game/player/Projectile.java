@@ -18,6 +18,7 @@ public class Projectile {
     boolean right;
     boolean active;
 
+    // constructor
     public Projectile (float x, float y, float speed, boolean right, Texture arrowTexture) {
         projectile = new Rectangle(x, y, arrowTexture.getWidth(), arrowTexture.getHeight());
         img = new TextureRegion(arrowTexture);
@@ -44,6 +45,7 @@ public class Projectile {
         return projectile.x;
     }
 
+    // projectile trajectory
     private void moveX() {
         if (right)
             projectile.x += speed;
@@ -51,11 +53,13 @@ public class Projectile {
             projectile.x -= speed;
     }
 
+    // projectile collides with enemie
     public void hit () {
         active = false;
         hitSound.play(0.2f);
     }
 
+    // projectile collides with wall
     private void verify (float lim1, float lim2) {
         if (projectile.x <= lim1 || projectile.x + projectile.width >= lim2) {
             active = false;
@@ -63,6 +67,7 @@ public class Projectile {
         }
     }
 
+    // render
     public void drawProjectile (SpriteBatch batch, float lim1, float lim2) {
         verify(lim1, lim2);
         if (active) {

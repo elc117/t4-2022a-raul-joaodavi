@@ -49,12 +49,15 @@ public class Player {
     private Animation fallAnimation;
     private Animation attackAnimation;
     private Animation rollAnimation;
-    private ArrayList<Projectile> projectiles; // Spawnados quando atira, somem no contato
 
+    // Players arrows
+    private ArrayList<Projectile> projectiles;
+
+    // Defines gravity logic
     public float gravity; // forca da gravidade
 
 
-    // CONSTRUTOR
+    // Constructor
     public Player(float positionX, float positionY, float moveSpeedX, float jumpSpeed, float gravity) {
         lifeTexture = new Texture("Character/Archer/Life.png");
         avatarTexture = new Texture("Character/Archer/Avatar.png");
@@ -95,7 +98,7 @@ public class Player {
         damageSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/Damage.wav"));
     }
 
-    // retorna animacao de acordo com o estado do jogador
+    // returns what animation is currently playing
     public TextureRegion getAnimation() {
         if (rolling)
             return rollAnimation.getFrame();
@@ -119,6 +122,7 @@ public class Player {
         return life;
     }
 
+    // player gets damaged by enemy
     public void takeHit (Enemy enemy) {
         float enemyPosX = enemy.getHitBox().x;
         float xMove = 50;
@@ -141,6 +145,7 @@ public class Player {
         }
     }
 
+    // hitted by hydra (phase 3 boss)
     public void takeHitNokb(float posX)
     {
 
@@ -153,6 +158,7 @@ public class Player {
         }
     }
 
+    // player gets invencible once its hit
     private void verifyInvencibility (float dt) {
         if (gotHited && currentInvincibleTime < invincibleTime)
             currentInvincibleTime += dt;
@@ -188,7 +194,7 @@ public class Player {
         this.grounded = grounded;
     }
 
-    // Movimento horizontal
+    // horizontal movement
     public void moveX(ArrayList<Rectangle> objects) {
         if (Gdx.input.isKeyPressed(Input.Keys.D) && hitBox.x + hitBox.width < 750) {
             float newPositionX;
@@ -226,6 +232,7 @@ public class Player {
         }
     }
 
+    // jumping logic
     public void jump(ArrayList<Rectangle> objects) {
         if (hitBox.y + hitBox.height > 550) {
             jumping = false;
@@ -242,6 +249,7 @@ public class Player {
             positionY += jumpSpeed;
     }
 
+    // gravity system's function
     public void gravityEffect(ArrayList<Rectangle> objects) {
         float newPositionY = positionY - gravity * timeInAir;
         if (hitBox.y > 55 && !jumping && !grounded) {
@@ -252,13 +260,13 @@ public class Player {
         }
     }
 
-    // Spawner de projeteis
+    // projectile spawner
     private void shoot() {
         projectiles.add(new Projectile(hitBox.x + 15, hitBox.y + 30, 10, isFacingRight, arrowTexture));
         shootSound.play(0.3f);
     }
 
-    // Ataque por inpuit
+    // attack (shoots arrow)
     private void attack() {
         if (Gdx.input.isKeyPressed(Input.Keys.P) && grounded && !running) {
             if (!attacking)
@@ -274,6 +282,7 @@ public class Player {
             attacking = false;
     }
 
+    // rolling system
     private void roll() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && grounded) {
             if (!rolling)
@@ -286,6 +295,7 @@ public class Player {
         }
     }
 
+    // moving inputs
     private void isRunning(ArrayList<Rectangle> objects) {
         if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             running = true;
@@ -294,11 +304,13 @@ public class Player {
         }
     }
 
+    // players hitbox position update
     private void hitBoxPosition(ArrayList<Rectangle> objects) {
         hitBox.x = positionX + 38;
         hitBox.y = positionY + 42;
     }
 
+    // removes projectiles
     private void removeShoots() {
         for (int i = 0; i < projectiles.size(); i++) {
             if (!projectiles.get(i).getActivity()) {
@@ -307,6 +319,7 @@ public class Player {
         }
     }
 
+    // drawing health on UI function
     private void drawLife(SpriteBatch batch) {
         batch.draw(avatarTexture, 5, 555);
         int posX = 55;
@@ -316,6 +329,7 @@ public class Player {
         }
     }
 
+    // render
     public void update(ArrayList<Rectangle> objects, float dt, SpriteBatch batch) {
         runAnimation.update(dt);
         idleAnimation.update(dt);

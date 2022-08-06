@@ -26,6 +26,7 @@ public class MedievalGame extends Game {
 		return player;
 	}
 
+	// constructor
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -37,9 +38,10 @@ public class MedievalGame extends Game {
 		setScreen(mainMenu);
 	}
 
+	// render, delegated to whatever fase is on
 	@Override
 	public void render () {
-		super.render(); // delegates render method to whatever screen is occuring at the time
+		super.render();
 	}
 
 }
