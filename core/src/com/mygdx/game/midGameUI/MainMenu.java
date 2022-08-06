@@ -65,7 +65,7 @@ public class MainMenu implements Screen{
             batch.draw(playButtonSelected, 340, 180);
             if(Gdx.input.isTouched()) {
                 this.dispose();
-                medievalGame.setScreen(new Phase1(medievalGame, batch, medievalGame.getPlayer()));
+                medievalGame.setScreen(new Story(medievalGame, batch, medievalGame.getPlayer(), medievalGame.getCurrentPhase()));
             }
         } else {
             batch.draw(playButtonIdle, 340, 180);

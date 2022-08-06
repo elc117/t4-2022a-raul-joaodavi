@@ -13,6 +13,7 @@ import com.mygdx.game.MedievalGame;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.enemies.Wolf;
 import com.mygdx.game.midGameUI.GameOverMenu;
+import com.mygdx.game.midGameUI.Story;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.Input;
 
@@ -134,7 +135,7 @@ public class Phase1 extends Phase{
     private void nextlevel () {
         if (enemiesKilled >= 15 || Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             this.dispose();
-            medievalGame.setScreen(new Phase2(medievalGame, batch, player));
+            medievalGame.setScreen(new Story(medievalGame, batch, player, currentPhase));
         }
     }
 

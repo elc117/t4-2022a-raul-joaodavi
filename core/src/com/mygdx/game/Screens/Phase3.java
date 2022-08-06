@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.enemies.FlameBall;
 import com.mygdx.game.enemies.Hydra;
+import com.mygdx.game.midGameUI.Story;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.Projectile;
 
@@ -82,6 +83,14 @@ public class Phase3 extends Phase{
         }
         player.update(phasePhysicShapes, delta, batch);
         batch.end();
+        nextlevel();
+    }
+
+    private void nextlevel () {
+        if (hydra.getLife() <= 0 || Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            this.dispose();
+            medievalGame.setScreen(new Story(medievalGame, batch, player, currentPhase));
+        }
     }
 
     // game hit and damage system

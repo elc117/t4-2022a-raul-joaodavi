@@ -7,6 +7,7 @@ import com.mygdx.game.Screens.Phase2;
 import com.mygdx.game.Screens.Phase3;
 import com.mygdx.game.midGameUI.GameOverMenu;
 import com.mygdx.game.midGameUI.MainMenu;
+import com.mygdx.game.midGameUI.Story;
 import com.mygdx.game.player.Player;
 
 public class MedievalGame extends Game {
@@ -27,6 +28,10 @@ public class MedievalGame extends Game {
 		return player;
 	}
 
+	public int getCurrentPhase() {
+		return currentPhase;
+	}
+	
 	// constructor
 	@Override
 	public void create () {
@@ -36,6 +41,7 @@ public class MedievalGame extends Game {
 		currentPhase = 1;
 		changedPhase = false;
 		mainMenu = new MainMenu(this, batch);
+		currentPhase = 0;
 		setScreen(mainMenu);
 	}
 
