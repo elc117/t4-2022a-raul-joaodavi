@@ -32,6 +32,7 @@ public class Player {
     private boolean shooted; // player atirou
     private boolean grounded; // player esta no chao
     private boolean gotHited;
+    private boolean dead;
 
     private Rectangle hitBox; // fisica (corpo) do jogador
 
@@ -49,6 +50,7 @@ public class Player {
     private Animation fallAnimation;
     private Animation attackAnimation;
     private Animation rollAnimation;
+    private Animation dieAnimation;
 
     // Players arrows
     private ArrayList<Projectile> projectiles;
@@ -66,13 +68,15 @@ public class Player {
         texture = new Texture("Character/Archer/SpriteSheets/Idle.png");
         idleAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, true);
         texture = new Texture("Character/Archer/SpriteSheets/Jump.png");
-        jumpAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, true);
+        jumpAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, false);
         texture = new Texture("Character/Archer/SpriteSheets/Fall.png");
         fallAnimation = new Animation(new TextureRegion(texture), 2, 0.5f, false);
         texture = new Texture("Character/Archer/SpriteSheets/Attack.png");
         attackAnimation = new Animation(new TextureRegion(texture), 7, 0.5f, true);
         texture = new Texture("Character/Archer/SpriteSheets/Rolling.png");
         rollAnimation = new Animation(new TextureRegion(texture), 7, 0.5f, true);
+        texture = new Texture("Character/Archer/SpriteSheets/Die.png");
+        dieAnimation = new Animation(new TextureRegion(texture), 8, 1f, false);
         hitBox = new Rectangle(positionX, positionY, 42, 55);
         this.positionX = positionX - 45;
         this.positionY = positionY - 42;
@@ -87,6 +91,7 @@ public class Player {
         rolling = false;
         grounded = true;
         gotHited = false;
+        dead = false;
         invincibleTime = 1;
         currentInvincibleTime = 0;
         rollSpeed = 10;
@@ -100,7 +105,9 @@ public class Player {
 
     // returns what animation is currently playing
     public TextureRegion getAnimation() {
-        if (rolling)
+        if (dead)
+            return dieAnimation.getFrame();
+        else if (rolling)
             return rollAnimation.getFrame();
         else if (running && grounded)
             return runAnimation.getFrame();
@@ -131,7 +138,7 @@ public class Player {
         else if (hitBox.x + hitBox.width >= 700 && -(hitBox.x + hitBox.width - 750) >= 0)
             xMove = -(hitBox.x + hitBox.width - 750);
         
-        if (!gotHited && !rolling) {
+        if (!gotHited && !rolling && !dead) {
             gotHited = true;
             currentInvincibleTime = 0;
             if (enemyPosX < hitBox.x)
@@ -149,13 +156,14 @@ public class Player {
         life = 3;
         positionX = 10;
         positionY = 13;
+        dead = false;
     }
 
     // hitted by hydra (phase 3 boss)
     public void takeHitNokb(float posX)
     {
 
-        if (!gotHited && !rolling) {
+        if (!gotHited && !rolling && !dead) {
             gotHited = true;
             currentInvincibleTime = 0;
             positionY += 30;
@@ -202,57 +210,63 @@ public class Player {
 
     // horizontal movement
     public void moveX(ArrayList<Rectangle> objects) {
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && hitBox.x + hitBox.width < 750) {
-            float newPositionX;
-            if (rolling)
-                newPositionX = positionX + rollSpeed;
-            else
-                newPositionX = positionX + moveSpeedX;
-            if (!isFacingRight) {
-                runAnimation.flip();
-                idleAnimation.flip();
-                jumpAnimation.flip();
-                attackAnimation.flip();
-                rollAnimation.flip();
-                fallAnimation.flip();
+        if (!dead) {
+            if (Gdx.input.isKeyPressed(Input.Keys.D) && hitBox.x + hitBox.width < 750) {
+                float newPositionX;
+                if (rolling)
+                    newPositionX = positionX + rollSpeed;
+                else
+                    newPositionX = positionX + moveSpeedX;
+                if (!isFacingRight) {
+                    dieAnimation.flip();
+                    runAnimation.flip();
+                    idleAnimation.flip();
+                    jumpAnimation.flip();
+                    attackAnimation.flip();
+                    rollAnimation.flip();
+                    fallAnimation.flip();
+                }
+                isFacingRight = true;
+                positionX = newPositionX;
             }
-            isFacingRight = true;
-            positionX = newPositionX;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && hitBox.x > 50) {
-            float newPositionX;
-            if (rolling)
-                newPositionX = positionX - rollSpeed;
-            else
-                newPositionX = positionX - moveSpeedX;
-            if (isFacingRight) {
-                runAnimation.flip();
-                idleAnimation.flip();
-                jumpAnimation.flip();
-                attackAnimation.flip();
-                rollAnimation.flip();
-                fallAnimation.flip();
+            if (Gdx.input.isKeyPressed(Input.Keys.A) && hitBox.x > 50) {
+                float newPositionX;
+                if (rolling)
+                    newPositionX = positionX - rollSpeed;
+                else
+                    newPositionX = positionX - moveSpeedX;
+                if (isFacingRight) {
+                    dieAnimation.flip();
+                    runAnimation.flip();
+                    idleAnimation.flip();
+                    jumpAnimation.flip();
+                    attackAnimation.flip();
+                    rollAnimation.flip();
+                    fallAnimation.flip();
+                }
+                isFacingRight = false;
+                positionX = newPositionX;
             }
-            isFacingRight = false;
-            positionX = newPositionX;
         }
     }
 
     // jumping logic
     public void jump(ArrayList<Rectangle> objects) {
-        if (hitBox.y + hitBox.height > 550) {
-            jumping = false;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded) {
-            jumpSound.play();
-            jumpAnimation.reset();
-            startJump = positionY;
-            jumping = true;
-        } else if (!Gdx.input.isKeyPressed(Input.Keys.SPACE) || positionY > startJump + 150) {
-            jumping = false;
-        }
+        if (!dead) {
+            if (hitBox.y + hitBox.height > 550) {
+                jumping = false;
+            } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded) {
+                jumpSound.play();
+                jumpAnimation.reset();
+                startJump = positionY;
+                jumping = true;
+            } else if (!Gdx.input.isKeyPressed(Input.Keys.SPACE) || positionY > startJump + 150) {
+                jumping = false;
+            }
 
-        if (jumping)
-            positionY += jumpSpeed;
+            if (jumping)
+                positionY += jumpSpeed;
+        }
     }
 
     // gravity system's function
@@ -274,30 +288,34 @@ public class Player {
 
     // attack (shoots arrow)
     private void attack() {
-        if (Gdx.input.isKeyPressed(Input.Keys.P) && grounded && !running) {
-            if (!attacking)
-                attackAnimation.reset();
-            attacking = true;
-            if (attackAnimation.getFrameIdx() == 6 && !shooted) {
-                shoot();
-                shooted = true;
-            } else if (attackAnimation.getFrameIdx() != 6) {
-                shooted = false;
-            }
-        } else
-            attacking = false;
+        if (!dead) {
+            if (Gdx.input.isKeyPressed(Input.Keys.P) && grounded && !running) {
+                if (!attacking)
+                    attackAnimation.reset();
+                attacking = true;
+                if (attackAnimation.getFrameIdx() == 6 && !shooted) {
+                    shoot();
+                    shooted = true;
+                } else if (attackAnimation.getFrameIdx() != 6) {
+                    shooted = false;
+                }
+            } else
+                attacking = false;
+        }
     }
 
     // rolling system
     private void roll() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && grounded) {
-            if (!rolling)
-                rollAnimation.reset();
-            rolling = true;
-            rollSound.play();
-        }
-        if (rollAnimation.getFrameIdx() == 6) {
-            rolling = false;
+        if (!dead) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && grounded) {
+                if (!rolling)
+                    rollAnimation.reset();
+                rolling = true;
+                rollSound.play();
+            }
+            if (rollAnimation.getFrameIdx() == 6) {
+                rolling = false;
+            }
         }
     }
 
@@ -333,6 +351,10 @@ public class Player {
             batch.draw(lifeTexture, posX, 560);
             posX += 35;
         }
+        if (life <= 0 && !dead) {
+            dieAnimation.reset();
+            dead = true;
+        }
     }
 
     // render
@@ -343,6 +365,7 @@ public class Player {
         attackAnimation.update(dt);
         rollAnimation.update(dt);
         fallAnimation.update(dt);
+        dieAnimation.update(dt);
         verifyInvencibility(dt);
         for (Projectile projectile : projectiles) {
             projectile.drawProjectile(batch, 50, 750);

@@ -36,10 +36,13 @@ public class Animation {
                 frame++;
                 currentFrameTime = 0;
             }
-            if(frame >= frameCount)
+            if(frame >= frameCount) {
                 frame = 0;
-                if(!repeat)
+                if(!repeat) {
                     firstExe = false;
+                    frame = frameCount - 1;
+                }
+            }
         }
     }
 
@@ -51,6 +54,7 @@ public class Animation {
 
     public void reset() {
         frame = 0;
+        firstExe = true;
     }
 
     public int getFrameIdx() {
