@@ -13,7 +13,7 @@ public class Hyena extends Enemy {
 
     // constructor
     public Hyena(int life, float positionX, float positionY, int strength) {
-        super(life, positionX - 20, positionY - 10, strength, (float) Math.random() + 3, 0);
+        super(life, positionX - 20, positionY - 10, strength, (float) (Math.random() * 3) + 2, 0);
         Texture texture = new Texture("Enemies/Hyena/Run.png");
         runAnimation = new Animation(new TextureRegion(texture), 6, 0.5f, true);
         texture = new Texture("Enemies/Hyena/Spawn.png");

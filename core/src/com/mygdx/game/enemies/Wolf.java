@@ -14,7 +14,7 @@ public class Wolf extends Enemy {
     // constructor
     public Wolf(int life, float positionX, float positionY, int strength)
     {   
-        super(life, positionX - 20, positionY - 10, strength,  (float) Math.random() + 3, 0);
+        super(life, positionX - 20, positionY - 10, strength,  (float) (Math.random() * 2) + 3, 0);
         Texture texture = new Texture("Enemies/Wolf/Run.png");
         runAnimation = new Animation(new TextureRegion(texture), 6, 0.5f, true);
         texture = new Texture("Enemies/Wolf/Spawn.png");

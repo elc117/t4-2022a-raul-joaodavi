@@ -12,7 +12,7 @@ public class Vulture extends Enemy {
 
     // constructor
     public Vulture(int life, float positionX, float positionY, int strength) {
-        super(life, positionX - 10, positionY - 10, strength, (float) Math.random() + 1, (float) Math.random() + 1);
+        super(life, positionX - 10, positionY - 10, strength, (float) (Math.random() * 3) + 1, (float) (Math.random() * 1.5) + 1);
         Texture texture = new Texture("Enemies/Vulture/Fly.png");
         flyAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, true);
         texture = new Texture("Enemies/Vulture/Spawn.png");
@@ -42,9 +42,9 @@ public class Vulture extends Enemy {
                     flyAnimation.flip();
                 }
             }
-            if (player.getHitBox().y + player.getHitBox().height / 2 < hitBox.y) {
+            if (player.getHitBox().y + player.getHitBox().height / 2 + moveSpeedY < hitBox.y) {
                 positionY -= moveSpeedY;
-            } else {
+            } else if (player.getHitBox().y + player.getHitBox().height / 2 - moveSpeedY > hitBox.y) {
                 positionY += moveSpeedY;
             }
         }

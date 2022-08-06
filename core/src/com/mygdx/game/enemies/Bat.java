@@ -13,7 +13,7 @@ public class Bat extends Enemy {
     // constructor
     public Bat(int life, float positionX, float positionY, int strength)
     {   
-        super(life, positionX - 64, positionY - 60, strength, (float) Math.random() + 1, (float) Math.random() + 1);
+        super(life, positionX - 64, positionY - 60, strength, (float) (Math.random() * 2) + 1, (float) (Math.random() * 1.5) + 1);
         Texture texture = new Texture("Enemies/Bat/Fly.png");
         flyAnimation = new Animation(new TextureRegion(texture), 4, 0.5f, true);
         texture = new Texture("Enemies/Bat/Spawn.png");
@@ -42,9 +42,9 @@ public class Bat extends Enemy {
                     flyAnimation.flip();
                 }
             }
-            if(player.getHitBox().y + player.getHitBox().height / 2 < hitBox.y) {
+            if (player.getHitBox().y + player.getHitBox().height / 2 + moveSpeedY < hitBox.y) {
                 positionY -= moveSpeedY;
-            } else {
+            } else if (player.getHitBox().y + player.getHitBox().height / 2 - moveSpeedY > hitBox.y) {
                 positionY += moveSpeedY;
             }
         }

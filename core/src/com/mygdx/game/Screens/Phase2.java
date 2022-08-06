@@ -43,6 +43,7 @@ public class Phase2 extends Phase {
         waitingTime = 5;
         spawned = false;
         currentPhase = 2;
+        numWave = 1;
     }
 
     // game platforms collision physics
@@ -79,22 +80,64 @@ public class Phase2 extends Phase {
         removeEnemies();
     }
 
-    // creating and spawning enemies on phase
     public void spawnEnemies(float delta) {
-        float totalWaitingTime = 5;
-        if (waitingTime < totalWaitingTime)
-            waitingTime += delta;
-        else if (!spawned) {
+        if(enemiesKilled == 1 && numWave == 1) {
+            spawned = false;
+            numWave++;
+        } else if (enemiesKilled == 3 && numWave == 2) {
+            spawned = false;
+            numWave++;
+        } else if (enemiesKilled == 6 && numWave == 3) {
+            spawned = false;
+            numWave++;
+        }
+        else if (enemiesKilled == 10 && numWave == 4) {
+            spawned = false;
+            numWave++;
+        } else if (enemiesKilled == 15 && numWave == 5) {
+            spawned = false;
+            numWave++;
+        }
+        
+        if (!spawned && enemiesKilled < 1 && numWave == 1) {
             spawned = true;
-            enemies.add(new Vulture(3, 70, 500, 1));
-            enemies.add(new Vulture(3, 500, 500, 1));
             enemies.add(new Hyena(3, 450, 55, 1));
+        } else if (!spawned && enemiesKilled < 3 && numWave == 2) {
+            spawned = true;
+            enemies.add(new Hyena(4, 500, 55, 1));
+            enemies.add(new Vulture(3, 500, 500, 1));
+        } else if (!spawned && enemiesKilled < 6 && numWave == 3) {
+            spawned = true;
+            enemies.add(new Vulture(3, 500, 500, 1));
+            enemies.add(new Vulture(3, 300, 400, 1));
+            enemies.add(new Vulture(3, 100, 300, 1));
+        } else if (!spawned && enemiesKilled < 10 && numWave == 4) {
+            spawned = true;
+            enemies.add(new Vulture(3, 500, 500, 1));
+            enemies.add(new Hyena(4, 500, 55, 1));
+            enemies.add(new Hyena(4, 150, 55, 1));
+            enemies.add(new Hyena(4, 300, 55, 1));
+        } else if (!spawned && enemiesKilled < 15 && numWave == 5) {
+            spawned = true;
+            enemies.add(new Vulture(3, 300, 400, 1));
+            enemies.add(new Vulture(3, 100, 300, 1));
+            enemies.add(new Hyena(4, 500, 55, 1));
+            enemies.add(new Hyena(4, 150, 55, 1));
+            enemies.add(new Hyena(4, 300, 55, 1));
+        } else if (!spawned && enemiesKilled < 21 && numWave == 6) {
+            spawned = true;
+            enemies.add(new Vulture(3, 400, 500, 1));
+            enemies.add(new Vulture(3, 300, 400, 1));
+            enemies.add(new Vulture(3, 100, 300, 1));
+            enemies.add(new Vulture(3, 500, 400, 1));
+            enemies.add(new Vulture(3, 600, 300, 1));
+            enemies.add(new Hyena(4, 400, 55, 1));
         }
     }
 
     // changing level
     private void nextlevel () {
-        if (enemiesKilled >= 3 || Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        if (enemiesKilled >= 21 || Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             this.dispose();
             medievalGame.setScreen(new Phase3(medievalGame, batch, player));
         }
