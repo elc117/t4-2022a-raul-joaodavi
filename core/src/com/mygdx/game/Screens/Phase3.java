@@ -98,6 +98,7 @@ public class Phase3 extends Phase{
                     arrow.hit();
                 }
             }
+            if (hydra.action == 0) return;
             for (FlameBall f: hydra.getListOfBalls()){
                 if (player.getHitBox().overlaps(f.getHitbox()))
                 {

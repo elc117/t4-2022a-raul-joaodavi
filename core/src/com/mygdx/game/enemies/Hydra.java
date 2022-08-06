@@ -133,6 +133,10 @@ public class Hydra extends Enemy {
             if (positionX != 315) {
                 positionX += xAxeBiggerThenCenter;
             }
+            if (positionX == 315 && positionY == 150)
+            {
+                transitionStarted = false;
+            }
         }
     }
 
