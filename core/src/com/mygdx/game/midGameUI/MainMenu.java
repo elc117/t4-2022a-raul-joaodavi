@@ -25,6 +25,7 @@ public class MainMenu implements Screen{
     private Texture playButtonSelected;
     private Texture exitButtonIdle;
     private Texture exitButtonSelected;
+    private float waitingTime;
 
     // constructor
     public MainMenu(MedievalGame medievalGame, SpriteBatch batch) {
@@ -38,6 +39,7 @@ public class MainMenu implements Screen{
         gamecam = new OrthographicCamera();
         gamecam.setToOrtho(false, 800, 600);
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
+        waitingTime = 0;
     }
 
     @Override
@@ -53,6 +55,7 @@ public class MainMenu implements Screen{
         batch.begin();
         batch.draw(backGround, 0, 0);
         verifyClicks();
+        wait(delta);
         batch.end();
     }
 
@@ -67,14 +70,19 @@ public class MainMenu implements Screen{
         } else {
             batch.draw(playButtonIdle, 340, 180);
         }
-        if (Gdx.input.getX() > 338 && Gdx.input.getX() < 338 + exitButtonIdle.getWidth() && Gdx.input.getY() < 520 && Gdx.input.getY() > 518 - playButtonIdle.getHeight()) {
+        if (Gdx.input.getX() > 338 && Gdx.input.getX() < 338 + exitButtonIdle.getWidth() && Gdx.input.getY() < 520 && Gdx.input.getY() > 520 - exitButtonIdle.getHeight()) {
             batch.draw(exitButtonSelected, 338, 80);
-            if(Gdx.input.isTouched()) {
+            if(Gdx.input.isTouched() && waitingTime >= 1) {
                 Gdx.app.exit();
             }
         } else {
             batch.draw(exitButtonIdle, 338, 80);
         }
+    }
+
+    private void wait (float dt) {
+        if (waitingTime <= 1)
+            waitingTime += dt;
     }
 
     @Override

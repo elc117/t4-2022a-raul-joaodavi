@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.enemies.Enemy;
+import com.mygdx.game.midGameUI.GameOverMenu;
 import com.mygdx.game.MedievalGame;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.Projectile;
@@ -30,6 +31,8 @@ public abstract class Phase implements Screen {
     protected ArrayList<Enemy> enemies;
     protected int enemiesKilled;
     protected Music music;
+    protected float gameOverTime;
+    protected int currentPhase;
 
     // game player and enemies attack colision sistem
     public void verifyColision() {
@@ -56,6 +59,18 @@ public abstract class Phase implements Screen {
         }
     }
 
+    private void gameOver(float delta) {
+        if(player.getStatus())
+            gameOverTime += delta;
+        else
+            gameOverTime = 0;
+    
+        if (gameOverTime >= 2) {
+            this.dispose();
+            medievalGame.setScreen(new GameOverMenu(medievalGame, batch, currentPhase));
+        }
+    }
+
     @Override
     public void show() {
 
@@ -71,6 +86,7 @@ public abstract class Phase implements Screen {
         batch.draw(player.getAnimation(), player.getPositionX(), player.getPositionY());
         isGrounded();
         verifyColision();
+        gameOver(delta);
     }
 
     // ajusts screen to window size

@@ -11,6 +11,7 @@ import com.mygdx.game.enemies.Hyena;
 import com.mygdx.game.MedievalGame;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.enemies.Vulture;
+import com.mygdx.game.midGameUI.GameOverMenu;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.Input;
 
@@ -41,6 +42,7 @@ public class Phase2 extends Phase {
         enemiesKilled = 0;
         waitingTime = 0;
         spawned = false;
+        currentPhase = 2;
     }
 
     // game platforms collision physics

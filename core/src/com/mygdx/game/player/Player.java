@@ -152,6 +152,10 @@ public class Player {
         }
     }
 
+    public boolean getStatus () {
+        return dead;
+    }
+
     public void setDefault() {
         life = 3;
         positionX = 10;

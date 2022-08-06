@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Screens.Phase1;
 import com.mygdx.game.Screens.Phase2;
 import com.mygdx.game.Screens.Phase3;
+import com.mygdx.game.midGameUI.GameOverMenu;
 import com.mygdx.game.midGameUI.MainMenu;
 import com.mygdx.game.player.Player;
 

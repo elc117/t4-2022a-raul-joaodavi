@@ -37,6 +37,7 @@ public class Phase3 extends Phase{
         music.setVolume(0.3f);
         music.play();
         player.setDefault();
+        currentPhase = 3;
     }
 
     // game platforms physics
