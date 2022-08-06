@@ -33,6 +33,7 @@ public abstract class Phase implements Screen {
     protected Music music;
     protected float gameOverTime;
     protected int currentPhase;
+    protected int numWave;
 
     // game player and enemies attack colision sistem
     public void verifyColision() {

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class Phase1 extends Phase{
     ArrayList<Rectangle> phasePhysicShapes;
     private boolean spawned;
-    private float waitingTime;
 
     // constructor
     public Phase1(MedievalGame game, SpriteBatch batch, Player player) {
@@ -41,9 +40,9 @@ public class Phase1 extends Phase{
         music.play();
         enemies = new ArrayList<Enemy>();
         enemiesKilled = 0;
-        waitingTime = 5;
         spawned = false;
         currentPhase = 1;
+        numWave = 1;
     }
 
     // game platforms colision
@@ -88,20 +87,52 @@ public class Phase1 extends Phase{
 
     // creating and spawning enemies in phase
     public void spawnEnemies(float delta) {
-        float totalWaitingTime = 5;
-        if (waitingTime < totalWaitingTime)
-            waitingTime += delta;
-        else if (!spawned) {
+        if(enemiesKilled == 1 && numWave == 1) {
+            spawned = false;
+            numWave++;
+        } else if (enemiesKilled == 3 && numWave == 2) {
+            spawned = false;
+            numWave++;
+        } else if (enemiesKilled == 6 && numWave == 3) {
+            spawned = false;
+            numWave++;
+        }
+        else if (enemiesKilled == 10 && numWave == 4) {
+            spawned = false;
+            numWave++;
+        }
+        
+        if (!spawned && enemiesKilled < 1 && numWave == 1) {
+            spawned = true;
+            enemies.add(new Wolf(3, 450, 55, 1));
+        } else if (!spawned && enemiesKilled < 3 && numWave == 2) {
+            spawned = true;
+            enemies.add(new Bat(3, 120, 500, 1));
+            enemies.add(new Bat(3, 500, 500, 1));
+        } else if (!spawned && enemiesKilled < 6 && numWave == 3) {
+            spawned = true;
+            enemies.add(new Bat(3, 300, 500, 1));
+            enemies.add(new Wolf(3, 450, 55, 1));
+            enemies.add(new Wolf(3, 120, 55, 1));
+        } else if (!spawned && enemiesKilled < 10 && numWave == 4) {
             spawned = true;
             enemies.add(new Bat(3, 120, 500, 1));
             enemies.add(new Bat(3, 500, 500, 1));
             enemies.add(new Wolf(3, 450, 55, 1));
+            enemies.add(new Wolf(3, 120, 55, 1));
+        } else if (!spawned && enemiesKilled < 15 && numWave == 5) {
+            spawned = true;
+            enemies.add(new Bat(3, 120, 500, 1));
+            enemies.add(new Bat(3, 500, 500, 1));
+            enemies.add(new Bat(3, 300, 500, 1));
+            enemies.add(new Wolf(3, 450, 55, 1));
+            enemies.add(new Wolf(3, 120, 55, 1));
         }
     }
 
     // changing level
     private void nextlevel () {
-        if (enemiesKilled >= 3 || Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        if (enemiesKilled >= 15 || Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             this.dispose();
             medievalGame.setScreen(new Phase2(medievalGame, batch, player));
         }
