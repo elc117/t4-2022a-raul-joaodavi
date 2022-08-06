@@ -41,7 +41,7 @@ public class Phase1 extends Phase{
         music.play();
         enemies = new ArrayList<Enemy>();
         enemiesKilled = 0;
-        waitingTime = 0;
+        waitingTime = 5;
         spawned = false;
         currentPhase = 1;
     }
@@ -93,7 +93,7 @@ public class Phase1 extends Phase{
             waitingTime += delta;
         else if (!spawned) {
             spawned = true;
-            enemies.add(new Bat(3, 70, 500, 1));
+            enemies.add(new Bat(3, 120, 500, 1));
             enemies.add(new Bat(3, 500, 500, 1));
             enemies.add(new Wolf(3, 450, 55, 1));
         }

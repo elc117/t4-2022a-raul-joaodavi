@@ -38,10 +38,10 @@ public abstract class Phase implements Screen {
     public void verifyColision() {
         ArrayList<Projectile> arrows = player.getProjectiles();
         for (Enemy enemy : enemies) {
-            if(player.getHitBox().overlaps(enemy.getHitBox()))
+            if(player.getHitBox().overlaps(enemy.getHitBox()) && !enemy.getStatus())
                 player.takeHit(enemy);
             for (Projectile arrow : arrows) {
-                if(enemy.getHitBox().overlaps(arrow.getProjectile())) {
+                if(enemy.getHitBox().overlaps(arrow.getProjectile()) && !enemy.getStatus()) {
                     enemy.getHit(arrow.getProjectile().x);
                     arrow.hit();
                 }

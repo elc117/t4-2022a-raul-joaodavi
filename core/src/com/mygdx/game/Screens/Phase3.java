@@ -28,7 +28,7 @@ public class Phase3 extends Phase{
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
         background = new Texture("Sceneries/Phase03.jpg");
         this.player = player;
-        this.hydra = new Hydra(3, (float)(100), (float)(100), 20, 10, 5, 50);
+        this.hydra = new Hydra(21, (float)(350), (float)(350), 20, 10, 5, 50);
         this.batch = batch;
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
@@ -90,10 +90,10 @@ public class Phase3 extends Phase{
         if (hydra.getLife() > 0)
         {
             ArrayList<Projectile> arrows = player.getProjectiles();
-            if (player.getHitBox().overlaps(hydra.getHitBox()))
+            if (player.getHitBox().overlaps(hydra.getHitBox()) && !hydra.getStatus())
                 player.takeHit(hydra);
             for (Projectile arrow : arrows) {
-                if (hydra.getHitBox().overlaps(arrow.getProjectile())) {
+                if (hydra.getHitBox().overlaps(arrow.getProjectile()) && !hydra.getStatus()) {
                     hydra.getHit(arrow.getProjectile().x);
                     arrow.hit();
                 }

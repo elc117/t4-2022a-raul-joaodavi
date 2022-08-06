@@ -35,7 +35,7 @@ public class GameOverMenu implements Screen{
     public GameOverMenu(MedievalGame medievalGame, SpriteBatch batch, int phase) {
         this.medievalGame = medievalGame;
         this.batch = batch;
-        backGround = new Texture("GameOverMenu/GameOverMenuImage.jpg");
+        backGround = new Texture("GameOverMenu/GameOverMenuImage.png");
         retryButtonIdle = new Texture("GameOverMenu/retryButtonIdle.png");
         retryButtonSelected = new Texture("GameOverMenu/retryButtonClicked.png");
         menuButtonIdle = new Texture("GameOverMenu/mainButtonIdle.png");

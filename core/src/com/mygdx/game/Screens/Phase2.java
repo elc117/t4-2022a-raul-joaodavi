@@ -40,7 +40,7 @@ public class Phase2 extends Phase {
         music.play();
         enemies = new ArrayList<Enemy>();
         enemiesKilled = 0;
-        waitingTime = 0;
+        waitingTime = 5;
         spawned = false;
         currentPhase = 2;
     }
