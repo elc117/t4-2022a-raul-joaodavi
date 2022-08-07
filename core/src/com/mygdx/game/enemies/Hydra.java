@@ -113,30 +113,15 @@ public class Hydra extends Enemy {
 
     // transiting to center screen when special attack initiates
     private void transitionToCenter() {
-        if (!transitionStarted) {
-            if (positionX > 315) {
-                xAxeBiggerThenCenter = -1;
-            } else {
-                xAxeBiggerThenCenter = 1;
-            }
-            if (positionY > 150) {
-                yAxeBiggerThenCenter = -1;
-            } else {
-                yAxeBiggerThenCenter = 1;
-            }
-            transitionStarted = true;
+        if (positionX > 315) {
+            positionX -= 1;
+        } else if (positionX < 314) {
+            positionX += 1;
         }
-        if (transitionStarted) {
-            if (positionY != 150) {
-                positionY += yAxeBiggerThenCenter;
-            }
-            if (positionX != 315) {
-                positionX += xAxeBiggerThenCenter;
-            }
-            if (positionX == 315 && positionY == 150)
-            {
-                transitionStarted = false;
-            }
+        if (positionY > 150) {
+            positionY -= 1;
+        } else if (positionY < 149) {
+            positionY += 1;
         }
     }
 

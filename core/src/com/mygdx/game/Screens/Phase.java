@@ -2,6 +2,7 @@ package com.mygdx.game.Screens;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -66,7 +67,7 @@ public abstract class Phase implements Screen {
         else
             gameOverTime = 0;
     
-        if (gameOverTime >= 2) {
+        if (gameOverTime >= 2 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             this.dispose();
             medievalGame.setScreen(new GameOverMenu(medievalGame, batch, currentPhase));
         }
