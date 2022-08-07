@@ -3,6 +3,7 @@ package com.mygdx.game.midGameUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,12 +19,17 @@ public class Story implements Screen {
     private int current;
     private int currentPhase;
     private int last;
+    private Music music;
     private SpriteBatch batch;
     private MedievalGame medievalGame;
     private float time;
     ArrayList<Texture> images;
     public Story(MedievalGame game, SpriteBatch batch, Player player, int currentPhase)
-    {
+    {   
+        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/MusicStory.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.3f);
+        music.play();
         images = new ArrayList<>();
         images.add(new Texture("Story/0.png"));
         images.add(new Texture("Story/1.jpg"));
@@ -111,7 +117,7 @@ public class Story implements Screen {
 
     @Override
     public void dispose() {
-
+        music.dispose();
     }
 
 

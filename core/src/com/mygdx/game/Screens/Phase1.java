@@ -36,7 +36,7 @@ public class Phase1 extends Phase{
         shapeRenderer.setAutoShapeType(true);
         music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/Music01.mp3"));
         music.setLooping(true);
-        music.setVolume(0.3f);
+        music.setVolume(0.5f);
         player.setDefault();
         music.play();
         enemies = new ArrayList<Enemy>();

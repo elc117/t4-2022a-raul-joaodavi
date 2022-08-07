@@ -42,6 +42,10 @@ public class GameOverMenu implements Screen{
         menuButtonSelected = new Texture("GameOverMenu/mainButtonClicked.png");
         exitButtonIdle = new Texture("MainMenu/exitButtonIdle.png");
         exitButtonSelected = new Texture("MainMenu/exitButtonClicked.png");
+        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/MusicGameOver.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.3f);
+        music.play();
         gamecam = new OrthographicCamera();
         gamecam.setToOrtho(false, 800, 600);
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
@@ -123,6 +127,6 @@ public class GameOverMenu implements Screen{
 
     @Override
     public void dispose() {
-        //music.dispose();
+        music.dispose();
     }
 }

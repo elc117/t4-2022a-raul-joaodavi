@@ -36,6 +36,10 @@ public class MainMenu implements Screen{
         playButtonSelected = new Texture("MainMenu/playButtonClicked.png");
         exitButtonIdle = new Texture("MainMenu/exitButtonIdle.png");
         exitButtonSelected = new Texture("MainMenu/exitButtonClicked.png");
+        music = Gdx.audio.newMusic(Gdx.files.internal("SoundEffects/Musics/MusicMainMenu.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.3f);
+        music.play();
         gamecam = new OrthographicCamera();
         gamecam.setToOrtho(false, 800, 600);
         gamePort = new FitViewport(medievalGame.V_WIDTH, medievalGame.V_HEIGHT, gamecam);
@@ -107,6 +111,6 @@ public class MainMenu implements Screen{
 
     @Override
     public void dispose() {
-        //music.dispose();
+        music.dispose();
     }
 }

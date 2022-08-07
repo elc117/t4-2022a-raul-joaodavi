@@ -44,6 +44,7 @@ public class Player {
     private Sound shootSound;
     private Sound rollSound;
     private Sound damageSound;
+    private Sound deathSound;
     private Animation runAnimation;
     private Animation idleAnimation;
     private Animation jumpAnimation;
@@ -101,6 +102,7 @@ public class Player {
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/JumpSound.mp3"));
         rollSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/RollSound.mp3"));
         damageSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/Damage.wav"));
+        deathSound = Gdx.audio.newSound(Gdx.files.internal("SoundEffects/SFX/DeathSound.mp3"));
     }
 
     // returns what animation is currently playing
@@ -358,6 +360,7 @@ public class Player {
         if (life <= 0 && !dead) {
             dieAnimation.reset();
             dead = true;
+            deathSound.play(0.6f);
         }
     }
 
