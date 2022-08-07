@@ -68,7 +68,7 @@ public class Story implements Screen {
 
     @Override
     public void render(float delta) {
-        if ((time >= 5 || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) && current <= last) {
+        if ((time >= 10 || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) && current <= last) {
             if (current == last) {
                 if(currentPhase == 0) {
                     this.dispose();

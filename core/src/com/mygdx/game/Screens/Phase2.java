@@ -102,7 +102,7 @@ public class Phase2 extends Phase {
         
         if (!spawned && enemiesKilled < 1 && numWave == 1) {
             spawned = true;
-            enemies.add(new Hyena(3, 450, 55, 1));
+            enemies.add(new Hyena(4, 450, 55, 1));
         } else if (!spawned && enemiesKilled < 3 && numWave == 2) {
             spawned = true;
             enemies.add(new Hyena(4, 500, 55, 1));

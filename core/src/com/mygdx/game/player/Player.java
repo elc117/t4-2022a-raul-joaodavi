@@ -137,7 +137,7 @@ public class Player {
         float xMove = 50;
         if (hitBox.x <= 100 && hitBox.x - 50 >= 0)
             xMove = hitBox.x - 50;
-        else if (hitBox.x + hitBox.width >= 700 && -(hitBox.x + hitBox.width - 750) >= 0)
+        else if (hitBox.x + hitBox.width >= 700 && - (hitBox.x + hitBox.width - 750) >= 0)
             xMove = -(hitBox.x + hitBox.width - 750);
         
         if (!gotHited && !rolling && !dead) {
